@@ -94,7 +94,6 @@ const IntroduceContainer = styled.div`
 
     @media (max-width: 768px) {
         width: 90%;
-        height: 70%;
         h2 {
             font-size: 2.5rem; // 40px
         }
@@ -105,7 +104,6 @@ const IntroduceContainer = styled.div`
     }
 
     @media (max-width: 480px) {
-        height: 60%;
 
         h2 {
             font-size: 2.25rem; // 36px

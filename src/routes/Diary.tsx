@@ -224,6 +224,12 @@ const TableContainer = styled.table`
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+
+            /* 글자 수 제한 */
+            white-space: nowrap;       /* 줄 바꿈 방지 */
+            overflow: hidden;          /* 넘치는 텍스트 숨기기 */
+            text-overflow: ellipsis;   /* '...'으로 표시 */
+            max-width: 150px;          /* 최대 너비 설정 */
         }
     }
 

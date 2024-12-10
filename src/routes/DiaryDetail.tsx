@@ -71,7 +71,6 @@ const DiaryDetail: React.FC = () => {
             <HeaderOne>[{data.category}] {data.title}</HeaderOne>
             <HeaderTwo>작성 일시 : {data.createdAt}</HeaderTwo>
             <ButtonContainer>
-                <button>댓글 달기</button>
                 <button onClick={() => navigate("/diary")}>돌아가기</button>
                 {admin === 1 && <>
                     <button onClick={() => navigate(`/quilleditor_update/${params}`, { state: data })}>수정하기</button>
