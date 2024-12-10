@@ -67,7 +67,7 @@ const DiaryDetail: React.FC = () => {
     }
 
     return (
-        <ReactQuillContainer>
+        <DiaryDetailContainer>
             <HeaderOne>[{data.category}] {data.title}</HeaderOne>
             <HeaderTwo>작성 일시 : {data.createdAt}</HeaderTwo>
             <ButtonContainer>
@@ -77,17 +77,19 @@ const DiaryDetail: React.FC = () => {
                     <button onClick={handleDelete}>삭제하기</button>
                 </>}
             </ButtonContainer>
+            <QuillContainer>
             <ReactQuill
                 theme="snow"// 테마 설정 (여기서는 snow를 사용)
                 value={data.realContent}
                 readOnly={true} // 읽기 전용 모드
                 modules={modules}
             />
-        </ReactQuillContainer>
+            </QuillContainer>
+        </DiaryDetailContainer>
     )
 }
 
-const ReactQuillContainer = styled.div`
+const DiaryDetailContainer = styled.div`
     overflow: hidden; /* 스크롤바 숨기기 */
     background-color: rgba(214, 230, 245, 0.925);
     
@@ -120,7 +122,7 @@ const HeaderOne = styled.h1`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 7vh;
+    font-size: 1.5vw;
     color: white;
     background-color: #282c34;
     padding: 20px 40px;
@@ -129,7 +131,6 @@ const HeaderOne = styled.h1`
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(214, 230, 245, 0.925); 
     
-
     &:hover {
         background-color: #3a3f47;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
@@ -147,6 +148,11 @@ color: #282c34;
 const ButtonContainer = styled.div`
 display:flex;
 justify-content: right;
+`;
+
+const QuillContainer = styled.div`
+    border: 0.625rem ridge #282c34; // 10px
+    border-radius: 0.625rem 0.625rem 0 0; // 10px 10px 0 0
 `;
 
 export default DiaryDetail;

@@ -20,8 +20,9 @@ const Experience: React.FC = () => {
     const [api, setApi] = useState<ReviewItem[]>([]);
     // const [filteredData, setFilteredData] = useState<ReviewItem[]>([]);
     const CategoryList = useMemo(() => ['전체', 'React', 'Node', 'Backend', 'Game', 'Etc'], []);
-    const [status, setStatus] = useState<boolean>(false);
-    const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
+    const [status, setStatus] = useState<boolean>(false); // 관리자 인증
+    const [selectedCategory, setSelectedCategory] = useState<string>
+    (CategoryList[0]);
     const navigate = useNavigate();
 
     useEffect(() => {

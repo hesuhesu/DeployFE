@@ -33,7 +33,7 @@ const FooterContainer = styled.footer`
         color: rgba(214, 230, 245, 0.925);
         margin: 0 1rem; // 0 16px
         display: inline-block;
-
+        
         &:hover {
             color: #61dafb;
         }

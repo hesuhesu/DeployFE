@@ -38,9 +38,15 @@ const Project: React.FC = () => {
     <ProjectContainer>
       <ProjectIntro>
         <h2>아래로 스크롤 해 주세요</h2>
-        <p>입니다.</p>
+        <p>하나 씩 프로젝트가 나타납니다!</p>
       </ProjectIntro>
       {[
+        {
+          title: "Lecture Review",
+          description: "학부생 시절 배웠던 내용들을 기록한 저장소 입니다. 다양한 분야에서 학습했던 과제, toy 프로젝트, cs 공부 등을 담고 있습니다.",
+          link: "https://github.com/hesuhesu/Lecture-Review",
+          picture: ["Lecture_Review.webp", "Lecture_Review2.webp"],
+        },
         {
           title: "My Diary",
           description: "나의 일기 앱을 Kotlin 을 사용하여 만든 toy 프로젝트 입니다.",
@@ -57,13 +63,13 @@ const Project: React.FC = () => {
           title: "GLTF 3D Editor",
           description: "3D Editor 기능을 보강하여 코드 리팩토링 및 클라이언트 배포를 진행한 토이 프로젝트 입니다.",
           link: "https://github.com/hesuhesu/gltfeditor",
-          secondLink: "https://gltfeditor.o-r.kr",
           picture: ["3D_Editor.webp", "3D_Editor2.webp"],
         },
         {
           title: "나만의 블로그 만들기",
-          description: "포트폴리오 겸 직접 블로그를 제작하였습니다.",
+          description: "포트폴리오 겸 직접 블로그를 제작하였습니다. 개발 했던 일기를 바탕으로 고민했던 부분들을 다시 볼 수 있습니다.",
           link: "https://github.com/hesuhesu/ReactUITester",
+          secondLink: "https://hesuhesu.o-r.kr",
           picture: ["MyBlog.webp", "MyBlog2.webp"],
         },
       ].map((project, index) => (
@@ -118,13 +124,6 @@ const Project: React.FC = () => {
               </ButtonContainer>
             </ContentDiv>
             <PictureSlide pictures={project.picture}/>
-            {/*
-            <PictureDiv>
-              {project.picture.map((src, idx) => (
-                <img key={idx} src={src} alt="" />
-              ))}
-            </PictureDiv>
-            */}
           </>}
         </ProjectDiv>
       ))}
@@ -133,7 +132,7 @@ const Project: React.FC = () => {
 };
 
 const ProjectContainer = styled.div`
-  height: 450vh;
+  height: 550vh;
   width: 100%;
   display: flex;
   flex-direction: column;

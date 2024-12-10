@@ -27,7 +27,9 @@ const Header: React.FC = () => {
 
     return (
         <HeaderContainer>
-            {pageTitle === "Project" ? <ProjectHeader>{pageTitle}</ProjectHeader> : <HeaderOne>{pageTitle}</HeaderOne>}
+                {pageTitle === "Portfolio" ? <HomeHeader>{pageTitle}</HomeHeader> : <>
+                    {pageTitle === 'Project' ? <ProjectHeader>{pageTitle}</ProjectHeader> : <HeaderOne>{pageTitle}</HeaderOne>}
+                </>}
                 <NavList>
                     <li><StyledLink to="/">Home</StyledLink></li>
                     <li><StyledLink to="/about">About</StyledLink></li>
@@ -60,6 +62,27 @@ const HeaderOne = styled.h1`
     font-size: 6.25rem; // 100px
     animation: ${fadeIn} 0.7s ease forwards;
     opacity: 0;
+
+    @media (max-width: 1200px) {
+        font-size: 5.3125rem; // 85px
+    }
+
+    @media (max-width: 768px) {
+        font-size: 4.375rem; // 70px
+    }
+
+    @media (max-width: 480px) {
+        font-size: 3.75rem; // 60px
+    }
+
+    @media (max-width: 344px) {
+        font-size: 3.375rem; // 54px
+    }
+`;
+
+const HomeHeader = styled.h1`
+    font-size: 6.25rem; // 100px
+    text-shadow: 0 0 30px rgba(255, 255, 255, .6), 0 0 60px rgba(255, 255, 255, .45), 0 0 110px rgba(255, 255, 255, .25), 0 0 100px rgba(255, 255, 255, .1);
 
     @media (max-width: 1200px) {
         font-size: 5.3125rem; // 85px
@@ -123,6 +146,8 @@ const NavList = styled.ul`
         &:nth-child(4) {
             animation-delay: 0.4s;
         }
+
+        
     }
 
     @media (max-width: 1200px) {

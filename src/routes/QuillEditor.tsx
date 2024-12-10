@@ -117,6 +117,12 @@ const QuillEditor: React.FC = () => {
             errorMessage("분류를 제대로 설정하세요!");
             return;
         }
+
+        if (title.length > 50){
+            errorMessage("제목은 50자리 이하입니다..");
+            return;
+        }
+        
         const description = quillRef.current?.getEditor().getText(); //태그를 제외한 순수 text만을 받아온다. 검색기능을 구현하지 않을 거라면 굳이 text만 따로 저장할 필요는 없다.
         // description.trim()
         axios.post(`${HOST}:${PORT}/diary/write`, {
