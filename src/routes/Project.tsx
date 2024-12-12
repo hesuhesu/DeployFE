@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import PictureSlide from '../components/PictureSlide.tsx';
+import PictureSlide from '../components/Project/PictureSlide.tsx';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { glow, fadeIn, jelloHorizontal } from '../components/Animation.tsx';

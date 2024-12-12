@@ -38,18 +38,6 @@ const Experience: React.FC = () => {
         setStatus(prevStatus => !prevStatus);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    /*
-    useEffect(() => {
-        if (selectedCategory === '전체') {
-            filteredData(api);
-        }
-        else {
-            const filtered = api.filter(item => item.category === selectedCategory);
-            setFilteredData(filtered);
-        }
-    }, [selectedCategory, api]);
-    */
     
     const filteredData = useMemo(() => {
         if (selectedCategory === '전체') {
