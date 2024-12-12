@@ -153,6 +153,10 @@ justify-content: right;
 const QuillContainer = styled.div`
     border: 0.625rem ridge #282c34; // 10px
     border-radius: 0.625rem 0.625rem 0 0; // 10px 10px 0 0
+    -webkit-user-select:all;
+    -moz-user-select:all;
+    -ms-user-select:all;
+    user-select:all;
 `;
 
 export default DiaryDetail;

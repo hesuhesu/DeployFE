@@ -9,6 +9,7 @@ import Diary from "./routes/Diary.tsx";
 import DiaryDetail from './routes/DiaryDetail.tsx';
 import QuillEditor from "./routes/QuillEditor.tsx";
 import QuillEditorUpdate from "./routes/QuillEditorUpdate.tsx";
+import WebEditor from './routes/WebEditor.js';
 import AuthPage from "./routes/AuthPage.tsx";
 import PrivateRoute from './utils/PrivateRoute.tsx';
 
@@ -30,11 +31,12 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
         <Routes>
+          <Route path="/webeditor" element={<WebEditor />} />
           <Route element={<Layout/>}>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/project" element={<Project />} />
-            <Route path="/diary" element={<Diary />} />
+            <Route path="/diary" element={<Diary />} />  
             <Route path = "/diary_detail/:_id" element = {<DiaryDetail/>}/>
             <Route element={<PrivateRoute/>}>
               <Route path="/quilleditor" element={<QuillEditor />} />
