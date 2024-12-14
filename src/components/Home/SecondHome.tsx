@@ -5,13 +5,16 @@ const SecondHome: React.FC = () => {
   const [buttonOn, setButtonOn] = useState<boolean>(false);
 
   const techStacks = [
-    { name: 'HTML', logo: 'html.svg' },
-    { name: 'CSS', logo: 'css.svg' },
+    { name: 'HTML', logo: 'html.svg'},
+    { name: 'CSS', logo: 'css.svg'},
     { name: 'SASS', logo: 'sass.svg' },
+    { name: 'JQuery', logo: 'jquery.svg'},
     { name: 'JavaScript', logo: 'javascript.svg' },
     { name: 'TypeScript', logo: 'typescript.svg' },
     { name: 'React', logo: 'react.svg' },
+    { name: 'Kotlin', logo: 'kotlin.svg'},
     { name: 'Three.js', logo: 'threejs.svg' },
+    { name: 'NodeJS', logo: 'nodejs.svg'},
     { name: 'MongoDB', logo: 'mongodb.svg' },
     { name: 'MySQL', logo: 'mysql.svg' },
     { name: 'AWS EC2', logo: 'aws.svg' },

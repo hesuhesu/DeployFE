@@ -3,7 +3,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { styled } from 'styled-components';
 import { jelloVertical } from '../components/Animation.tsx';
 import ReactQuill, { Quill } from 'react-quill';
-import EditorToolBar, { undoChange, redoChange, insertHeart, formats } from '../components/EditorToolBar.tsx';
+import EditorToolBar, { undoChange, redoChange, insertHeart } from '../components/EditorToolBar.tsx';
 import ImageResize from 'quill-image-resize';
 import { ImageDrop } from "quill-image-drop-module";
 import katex from 'katex';
@@ -220,7 +220,7 @@ const QuillEditorUpdate: React.FC = () => {
                 onChange={handleChange}
                 ref={quillRef}
                 modules={modules}
-                formats={formats}
+                style={{ height:'60vh'}}
             />
             <ButtonContainer>
                 <button>저장하기</button>

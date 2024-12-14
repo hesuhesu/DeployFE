@@ -10,6 +10,12 @@ import { authCheck } from '../utils/authCheck.tsx';
 import 'katex/dist/katex.min.css'; // formular 활성화
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
+
+hljs.configure({
+  languages: ["javascript", "python", "java", "cpp", "kotlin", "sql"],
+});
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
@@ -86,8 +92,12 @@ const QuillEditor: React.FC = () => {
     }, []);
 
     const modules = useMemo(() => ({
+        syntax: {
+            highlight: text => hljs.highlightAuto(text).value
+          },
         toolbar: {
             container: "#toolbar",
+            syntax: true,
             handlers: {
                 "undo": undoChange,
                 "redo": redoChange,
@@ -173,6 +183,7 @@ const QuillEditor: React.FC = () => {
                 ref={quillRef}
                 modules={modules}
                 formats={formats}
+                style={{height: '60vh'}}
             />
             <ButtonContainer>
                 <button>저장하기</button>
