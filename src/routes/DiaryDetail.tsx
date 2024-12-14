@@ -8,6 +8,12 @@ import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
+
+hljs.configure({
+  languages: ["javascript", "python", "java", "cpp", "kotlin", "sql"],
+});
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;

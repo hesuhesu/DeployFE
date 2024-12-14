@@ -42,7 +42,6 @@ export const formats = [
     "link", "image", "video", "color", "code-block", "formula", "direction"
 ];
 
-
 const CustomUndo:React.FC = () => (
     <svg viewBox="0 0 18 18">
         <polygon className="ql-fill ql-stroke" points="6 10 4 12 2 10 6 10" />
