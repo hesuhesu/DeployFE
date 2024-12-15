@@ -78,7 +78,7 @@ const Experience: React.FC = () => {
                     <tbody>
                         {filteredData.map((item) => (
                             <tr key={item._id} onClick={() => navigate(`/diary_detail/${item._id}`)}>
-                                <td><img src={`/${item.category}.svg`} alt="없음"/></td>
+                                <td><img src={`/${item.category.toLowerCase()}.svg`} alt="없음"/></td>
                                 <td>{item.title}</td>
                                 <td>{item.content}</td>
                                 <td>{item.createdAt}</td>
