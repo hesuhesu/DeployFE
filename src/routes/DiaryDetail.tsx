@@ -12,8 +12,15 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 
 hljs.configure({
-  languages: ["javascript", "python", "java", "cpp", "kotlin", "sql"],
+  languages: ["javascript", "python", "java", "cpp"],
 });
+
+const modules = {
+    syntax: {
+        highlight: text => hljs.highlightAuto(text).value,
+      },
+    toolbar: false
+};
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
@@ -51,10 +58,6 @@ const DiaryDetail: React.FC = () => {
             setAdmin(1);
         }).catch((error) => { console.error(error); });
     }, [params]);
-
-    const modules = {
-        toolbar: false, // toolbar 숨기기
-    };
 
     const handleDelete = () => {
         if (data.imgData.length > 0) {

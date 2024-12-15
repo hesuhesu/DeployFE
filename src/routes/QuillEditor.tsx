@@ -21,7 +21,7 @@ const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
 
 const QuillEditor: React.FC = () => {
-    const CategoryList = useMemo(() => ['전체', 'React', 'Node', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [editorHtml, setEditorHtml] = useState<string>('');
     const [title, setTitle] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
@@ -93,7 +93,7 @@ const QuillEditor: React.FC = () => {
 
     const modules = useMemo(() => ({
         syntax: {
-            highlight: text => hljs.highlightAuto(text).value
+            highlight: text => hljs.highlightAuto(text).value,
           },
         toolbar: {
             container: "#toolbar",
@@ -234,11 +234,11 @@ const ButtonContainer = styled.div`
         font-size: 16px;
         background-color: #282c34;
         border: none;
-        border-radius: 20px; 
+        border-radius: 20px;  
         color: white;
         font-weight: bold;
         cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
         &:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 

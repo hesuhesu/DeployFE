@@ -19,7 +19,7 @@ interface ReviewItem {
 const Experience: React.FC = () => {
     const [api, setApi] = useState<ReviewItem[]>([]);
     // const [filteredData, setFilteredData] = useState<ReviewItem[]>([]);
-    const CategoryList = useMemo(() => ['전체', 'React', 'Node', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [status, setStatus] = useState<boolean>(false); // 관리자 인증
     const [selectedCategory, setSelectedCategory] = useState<string>
     (CategoryList[0]);
@@ -78,7 +78,7 @@ const Experience: React.FC = () => {
                     <tbody>
                         {filteredData.map((item) => (
                             <tr key={item._id} onClick={() => navigate(`/diary_detail/${item._id}`)}>
-                                <td>{item.category}</td>
+                                <td><img src={`/${item.category}.svg`} alt="없음"/></td>
                                 <td>{item.title}</td>
                                 <td>{item.content}</td>
                                 <td>{item.createdAt}</td>
@@ -219,6 +219,11 @@ const TableContainer = styled.table`
             overflow: hidden;          /* 넘치는 텍스트 숨기기 */
             text-overflow: ellipsis;   /* '...'으로 표시 */
             max-width: 150px;          /* 최대 너비 설정 */
+
+            img {
+                width: 50px;
+                height: 50px;
+            }
         }
     }
 

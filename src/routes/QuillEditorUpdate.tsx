@@ -14,6 +14,12 @@ import { authCheck } from '../utils/authCheck.tsx';
 import 'katex/dist/katex.min.css'; // formular 활성화
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
+import hljs from "highlight.js";
+import "highlight.js/styles/github.css";
+
+hljs.configure({
+  languages: ["javascript", "python", "java", "cpp", "kotlin", "sql"],
+});
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
@@ -49,7 +55,7 @@ const Icons = ReactQuill.Quill.import("ui/icons");
 Icons.align["left"] = Icons.align[""];
 
 const QuillEditorUpdate: React.FC = () => {
-    const CategoryList = useMemo(() => ['전체', 'React', 'Node', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const location = useLocation();
     const [title, setTitle] = useState<string>('');
     const [editorHtml, setEditorHtml] = useState<string>('');
@@ -133,6 +139,9 @@ const QuillEditorUpdate: React.FC = () => {
     }, []);
 
     const modules = useMemo(() => ({
+        syntax: {
+            highlight: text => hljs.highlightAuto(text).value,
+          },
         toolbar: {
             container: "#toolbar",
             handlers: {
