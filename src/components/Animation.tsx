@@ -382,6 +382,16 @@ export const fadeIn2 = keyframes`
         }
 `;
 
+export const fadeOut = keyframes`
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+`; 
+
 // Header li 애니메이션
 export const fadeInUp = keyframes`
     from {

@@ -89,7 +89,7 @@
 /* 에디터 양식 */
 .ql-editor{ 
   width: 100%; 
-
+  min-height: 60vh;
   img {
     border-radius: 10px !important;
     border: 3px solid #282c34 !important;  

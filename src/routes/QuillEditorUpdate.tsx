@@ -1,16 +1,12 @@
 import React, { useState, useRef, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { styled } from 'styled-components';
-import { jelloVertical } from '../components/Animation.tsx';
 import ReactQuill, { Quill } from 'react-quill';
 import EditorToolBar, { undoChange, redoChange, insertHeart } from '../components/EditorToolBar.tsx';
-import ImageResize from 'quill-image-resize';
-import { ImageDrop } from "quill-image-drop-module";
-import katex from 'katex';
-import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
 import axios from 'axios';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
+import ButtonContainer from '../components/QuillEditor/ButtonContainer.tsx';
 import 'katex/dist/katex.min.css'; // formular 활성화
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
@@ -18,44 +14,14 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 
 hljs.configure({
-  languages: ["javascript", "python", "java", "cpp", "kotlin", "sql"],
+  languages: ["javascript", "python", "java", "cpp"],
 });
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
 
-declare global {
-    interface Window {
-        katex: typeof katex;
-    }
-}
-window.katex = katex;
-
-// 모듈 등록
-Quill.register("modules/imageDrop", ImageDrop);
-Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
-Quill.register('modules/ImageResize', ImageResize);
-
-// 폰트 사이즈 추가
-const Size = Quill.import("attributors/style/size");
-Size.whitelist = ["8px", "10px", "12px",
-    "14px", "20px", "24px", "30px", "36px", "48px",
-    "60px", "72px", "84px", "96px", "120px"];
-Quill.register(Size, true);
-
-// 폰트 추가
-const Font = Quill.import("attributors/class/font");
-Font.whitelist = ["arial", "buri", "gangwon", "Quill", "serif", "monospace", "끄트머리체", "할아버지의나눔", "나눔고딕", "궁서체", "굴림체", "바탕체", "돋움체"];
-Quill.register(Font, true);
-
-// align & icon 변경
-const Align = ReactQuill.Quill.import("formats/align");
-Align.whitelist = ["left", "center", "right", "justify"];
-const Icons = ReactQuill.Quill.import("ui/icons");
-Icons.align["left"] = Icons.align[""];
-
 const QuillEditorUpdate: React.FC = () => {
-    const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo<string[]>(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const location = useLocation();
     const [title, setTitle] = useState<string>('');
     const [editorHtml, setEditorHtml] = useState<string>('');
@@ -78,6 +44,10 @@ const QuillEditorUpdate: React.FC = () => {
     const handleChange = useCallback((html: string) => {
         setEditorHtml(html);
     }, []);
+
+    const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCategory(event.target.value);
+    };
 
     // 이미지 처리를 하는 핸들러
     const imageHandler = () => {
@@ -181,6 +151,7 @@ const QuillEditorUpdate: React.FC = () => {
         
         const description = quillRef.current?.getEditor().getText(); //태그를 제외한 순수 text만을 받아온다. 검색기능을 구현하지 않을 거라면 굳이 text만 따로 저장할 필요는 없다.
         // description.trim()
+
         axios.put(`${HOST}:${PORT}/diary/update`, {
             _id: params,
             title: title,
@@ -205,10 +176,6 @@ const QuillEditorUpdate: React.FC = () => {
         navigate(-1);
     }
 
-    const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCategory(event.target.value);
-    };
-
     return (
         <FormContainer onSubmit={handleSubmit}>
             <CustomInput type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
@@ -231,10 +198,7 @@ const QuillEditorUpdate: React.FC = () => {
                 modules={modules}
                 style={{ height:'60vh'}}
             />
-            <ButtonContainer>
-                <button>저장하기</button>
-                <button type="button" onClick={handleCancel}>취소하기</button>
-            </ButtonContainer>
+            <ButtonContainer onSave={handleSubmit} onCancel={handleCancel} />
         </FormContainer>
     )
 }
@@ -266,35 +230,6 @@ const SelectContainer = styled.div`
         font-size: 16px;
         border: 1px solid #ddd;
         border-radius: 5px;
-    }
-`;
-
-const ButtonContainer = styled.div`
-    display: flex; 
-    justify-content: center;
-
-    button {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #282c34;
-        border: none;
-        border-radius: 20px; 
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        &:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-            animation: ${jelloVertical} 1s ease forwards;
-        }
-
-        &:active {
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-            transform: translateY(1px);
-        }
     }
 `;
 

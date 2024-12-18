@@ -25,7 +25,7 @@ const SecondHome: React.FC = () => {
   return (
     <SecondHomeContainer>
       <FontContainer>TECH</FontContainer>
-      <CardContainer buttonOn={buttonOn}>
+      <CardContainer style={{ width: buttonOn ? '36vw' : '10vw' }}>
         {buttonOn ? (
           techStacks.map((stack, index) => (
             <Card key={index} style={{ animationDelay: `${0.5 + index * 0.1}s` }}>
@@ -69,8 +69,7 @@ const FontContainer = styled.div`
   align-items: center;
 `;
 
-const CardContainer = styled.div<{ buttonOn: boolean }>`
-  width: ${(props) => (props.buttonOn ? '36vw' : '10vw')};
+const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

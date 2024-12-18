@@ -1,0 +1,98 @@
+import React from 'react';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons';
+
+const ScrollButtonContainer: React.FC = () => {
+    
+    const scrollToTop = () => {
+        const scrollTarget = 0;
+        const currentScroll = window.scrollY;
+        const distance = scrollTarget - currentScroll;
+        const duration = 1000; // 1초 동안 움직이기
+        let startTime: number;
+    
+        const animateScroll = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1); // 0에서 1까지의 진행 상태
+    
+            window.scrollTo(0, currentScroll + distance * progress); // 스크롤 이동
+    
+            if (elapsed < duration) {
+                requestAnimationFrame(animateScroll); // 애니메이션이 끝날 때까지 반복
+            }
+        };
+        requestAnimationFrame(animateScroll); // 애니메이션 시작
+    };
+    
+    const scrollToBottom = () => {
+        const scrollTarget = document.body.scrollHeight;
+        const currentScroll = window.scrollY;
+        const distance = scrollTarget - currentScroll;
+        const duration = 1000; // 1초 동안 움직이기
+        let startTime: number;
+    
+        const animateScroll = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1); // 0에서 1까지의 진행 상태
+    
+            window.scrollTo(0, currentScroll + distance * progress); // 스크롤 이동
+    
+            if (elapsed < duration) {
+                requestAnimationFrame(animateScroll); // 애니메이션이 끝날 때까지 반복
+            }
+        };
+        requestAnimationFrame(animateScroll); // 애니메이션 시작
+    };
+
+    return (
+        <Container>
+            <button onClick={scrollToTop}>
+                <FontAwesomeIcon icon={faArrowAltCircleUp} size="2x" />
+            </button>
+            <button onClick={scrollToBottom}>
+                <FontAwesomeIcon icon={faArrowAltCircleDown} size="2x" />
+            </button>
+        </Container>
+    );
+};
+
+const Container = styled.div`
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    
+    button {
+        margin: 5px 0;
+        padding: 10px;
+        font-size: 20px;
+        background-color: #282c34;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;  // 원 모양 버튼
+        height: 40px; // 원 모양 버튼
+
+        &:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        &:active {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
+        }
+    }
+`;
+
+export default ScrollButtonContainer;

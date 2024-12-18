@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import { vibrate1 } from '../components/Animation.tsx';
+import ReactQuill from 'react-quill';
+import { vibrate1, fadeIn } from '../components/Animation.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
-import ReactQuill from 'react-quill';
+import Spinner from '../components/Spinner.tsx';
+import ScrollButtonContainer from '../components/DiaryDetail/ScrollButtonContainer.tsx';
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
 import hljs from "highlight.js";
@@ -14,13 +16,6 @@ import "highlight.js/styles/github.css";
 hljs.configure({
   languages: ["javascript", "python", "java", "cpp"],
 });
-
-const modules = {
-    syntax: {
-        highlight: text => hljs.highlightAuto(text).value,
-      },
-    toolbar: false
-};
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
@@ -46,8 +41,10 @@ const DiaryDetail: React.FC = () => {
         imgData: [],
         createdAt: ''
     });
+    const [isLoading, setIsLoading] = useState<Boolean>(true); // 로딩 상태 관리
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
         axios.get(`${HOST}:${PORT}/diary/read`, {
             params: { _id: params }
         }).then((response) => {
@@ -56,8 +53,26 @@ const DiaryDetail: React.FC = () => {
                 return;
             }
             setAdmin(1);
-        }).catch((error) => { console.error(error); });
+        }).catch((error) => { console.error(error); })
+        .finally(() => {
+            // setTimeout(() => setIsLoading(false), 500);
+            timeoutId = setTimeout(() => setIsLoading(false), 500);
+          });
+        return () => {
+            clearTimeout(timeoutId);
+        };
     }, [params]);
+
+    const modules = useMemo(() => ({
+        syntax: {
+            highlight: (text: string) => hljs.highlightAuto(text).value,
+        },
+        toolbar: false,
+    }), []);
+
+    if (isLoading) {
+        return <Spinner/>;
+    }
 
     const handleDelete = () => {
         if (data.imgData.length > 0) {
@@ -76,55 +91,35 @@ const DiaryDetail: React.FC = () => {
     }
 
     return (
-        <DiaryDetailContainer>
-            <HeaderOne>[{data.category}] {data.title}</HeaderOne>
-            <HeaderTwo>작성 일시 : {data.createdAt}</HeaderTwo>
-            <ButtonContainer>
-                <button onClick={() => navigate("/diary")}>돌아가기</button>
-                {admin === 1 && <>
-                    <button onClick={() => navigate(`/quilleditor_update/${params}`, { state: data })}>수정하기</button>
-                    <button onClick={handleDelete}>삭제하기</button>
-                </>}
-            </ButtonContainer>
-            <QuillContainer>
-            <ReactQuill
-                theme="snow"// 테마 설정 (여기서는 snow를 사용)
-                value={data.realContent}
-                readOnly={true} // 읽기 전용 모드
-                modules={modules}
-            />
-            </QuillContainer>
-        </DiaryDetailContainer>
-    )
-}
+            <DiaryDetailContainer>
+                <HeaderOne>[{data.category}] {data.title}</HeaderOne>
+                <HeaderTwo>작성 일시 : {data.createdAt}</HeaderTwo>
+                <ButtonContainer>
+                    <button onClick={() => navigate("/diary")}>돌아가기</button>
+                    {admin === 1 && (
+                    <>
+                        <button onClick={() => navigate(`/quilleditor_update/${params}`, { state: data })}>수정하기</button>
+                        <button onClick={handleDelete}>삭제하기</button>
+                    </>
+                    )}
+                </ButtonContainer>
+                <QuillContainer>
+                    <ReactQuill
+                    theme="snow"
+                    value={data.realContent}
+                    readOnly={true}
+                    modules={modules}
+                    />
+                </QuillContainer>
+                <ScrollButtonContainer/>
+            </DiaryDetailContainer>
+      );
+    };
 
 const DiaryDetailContainer = styled.div`
     overflow: hidden; /* 스크롤바 숨기기 */
     background-color: rgba(214, 230, 245, 0.925);
-    
-    button {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #282c34;
-        border: none;
-        border-radius: 20px;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        &:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-            animation: ${vibrate1} 0.3s ease infinite;
-        }
-
-        &:active {
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-            transform: translateY(1px);
-        }
-    }
+    animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
 const HeaderOne = styled.h1`
@@ -148,15 +143,39 @@ const HeaderOne = styled.h1`
 `;
 
 const HeaderTwo = styled.h2`
-display:flex;
-justify-content: right;
-font-size: 20px;
-color: #282c34;
+    display:flex;
+    justify-content: right;
+    font-size: 20px;
+    color: #282c34;
 `;
 
 const ButtonContainer = styled.div`
-display:flex;
-justify-content: right;
+    display:flex;
+    justify-content: right;
+
+    button {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #282c34;
+        border: none;
+        border-radius: 20px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            animation: ${vibrate1} 0.3s ease infinite;
+        }
+
+        &:active {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transform: translateY(1px);
+        }
+    }
 `;
 
 const QuillContainer = styled.div`

@@ -43,7 +43,7 @@ const Project: React.FC = () => {
       {[
         {
           title: "Lecture Review",
-          description: "학부생 시절 배웠던 내용들을 기록한 저장소 입니다. 다양한 분야에서 학습했던 과제, toy 프로젝트, cs 공부 등을 담고 있습니다.",
+          description: "학부생 기간 동안 배웠던 내용들을 기록한 저장소 입니다. 다양한 분야에서 학습했던 과제, cs 공부 등을 담고 있습니다.",
           link: "https://github.com/hesuhesu/Lecture-Review",
           picture: ["Lecture_Review.webp", "Lecture_Review2.webp"],
         },
@@ -61,7 +61,7 @@ const Project: React.FC = () => {
         },
         {
           title: "GLTF 3D Editor",
-          description: "3D Editor 기능을 보강하여 코드 리팩토링 및 클라이언트 배포를 진행한 토이 프로젝트 입니다.",
+          description: "3D Editor 기능을 보강하여 코드 리팩토링과 기능 통합을 진행한 토이 프로젝트 입니다.",
           link: "https://github.com/hesuhesu/gltfeditor",
           picture: ["3D_Editor.webp", "3D_Editor2.webp"],
         },
