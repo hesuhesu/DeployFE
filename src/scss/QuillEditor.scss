@@ -1,7 +1,3 @@
-
-/*본인이 설정하고 싶은 폰트 import하기*/
-@import url("https://webfontworld.github.io/amore/AritaBuri.css");
-
 @font-face {
   font-family: "GangwonEduHyeonokT_OTFMediumA";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduHyeonokT_OTFMediumA.woff")
@@ -81,7 +77,6 @@
   font-family: "Quill";
   src: url("../../public/Quill.ttf") format("truetype");
 }
-
 .ql-font-Quill {
   font-family: "Quill";
 }
