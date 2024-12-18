@@ -1,12 +1,12 @@
 import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from "react-router-dom";
 import { styled } from 'styled-components';
-import { jelloVertical } from '../components/Animation.tsx';
 import ReactQuill, { Quill } from 'react-quill';
 import EditorToolBar, { undoChange, redoChange, insertHeart, formats } from '../components/EditorToolBar.tsx';
 import axios from 'axios';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
+import ButtonContainer from '../components/QuillEditor/ButtonContainer.tsx';
 import 'katex/dist/katex.min.css'; // formular 활성화
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
@@ -14,21 +14,25 @@ import hljs from "highlight.js";
 import "highlight.js/styles/github.css";
 
 hljs.configure({
-  languages: ["javascript", "python", "java", "cpp", "kotlin", "sql"],
+  languages: ["javascript", "python", "java", "cpp"],
 });
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
 
 const QuillEditor: React.FC = () => {
-    const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo<string[]>(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [editorHtml, setEditorHtml] = useState<string>('');
     const [title, setTitle] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
     const [imgData, setImgData] = useState<string[]>([]); // 이미지 배열
     const quillRef = useRef<ReactQuill | null>(null); // Ref 타입 설정
     const navigate = useNavigate();
-
+    
+    const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setSelectedCategory(event.target.value);
+    };
+    
     // 이미지 처리를 하는 핸들러
     const imageHandler = () => {
         // 1. 이미지를 저장할 input type=file DOM을 만든다.
@@ -158,10 +162,6 @@ const QuillEditor: React.FC = () => {
         navigate('/diary');
     }
 
-    const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCategory(event.target.value);
-    };
-
     return (
         <FormContainer onSubmit={handleSubmit}>
             <CustomInput type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
@@ -185,10 +185,7 @@ const QuillEditor: React.FC = () => {
                 formats={formats}
                 style={{height: '60vh'}}
             />
-            <ButtonContainer>
-                <button>저장하기</button>
-                <button onClick={handleCancel}>취소하기</button>
-            </ButtonContainer>
+            <ButtonContainer onSave={handleSubmit} onCancel={handleCancel} />
         </FormContainer>
     )
 }
@@ -220,35 +217,6 @@ const SelectContainer = styled.div`
         font-size: 16px;
         border: 1px solid #ddd;
         border-radius: 5px;
-    }
-`;
-
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: center;
-
-    button {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #282c34;
-        border: none;
-        border-radius: 20px;  
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        &:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 
-            animation: ${jelloVertical} 1s ease forwards;
-        }
-
-        &:active {
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-            transform: translateY(1px);
-        }
     }
 `;
 

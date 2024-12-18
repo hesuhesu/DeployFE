@@ -4,6 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { authCheck } from '../utils/authCheck.tsx';
 import { fadeIn, jelloHorizontal } from '../components/Animation.tsx';
+import Spinner from '../components/Spinner.tsx';
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
@@ -18,33 +19,44 @@ interface ReviewItem {
 
 const Experience: React.FC = () => {
     const [api, setApi] = useState<ReviewItem[]>([]);
-    // const [filteredData, setFilteredData] = useState<ReviewItem[]>([]);
     const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [status, setStatus] = useState<boolean>(false); // 관리자 인증
-    const [selectedCategory, setSelectedCategory] = useState<string>
-    (CategoryList[0]);
+    const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
+    const [isLoading, setIsLoading] = useState<Boolean>(true); // 로딩 상태 관리
     const navigate = useNavigate();
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
         (async () => {
             try {
                 const response = await axios.get(`${HOST}:${PORT}/diary/all_read`);
                 setApi(response.data.list);
             } catch (error) {
                 console.error(error);
+            }
+            finally {
+                // setIsLoading(false);
+                timeoutId = setTimeout(() => setIsLoading(false), 500);
             } 
         })();
         if (authCheck() === 0){ return; }
         setStatus(prevStatus => !prevStatus);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
     }, []);
-    
+
     const filteredData = useMemo(() => {
         if (selectedCategory === '전체') {
-            return api; // 전체 데이터를 반환
+            return api;
         }
-        return api.filter(item => item.category === selectedCategory); // 필터링된 데이터를 반환
+        return api.filter(item => item.category === selectedCategory);
     }, [selectedCategory, api]);
+
+    if (isLoading) {
+        return <Spinner/>;
+    }
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCategory(event.target.value);
@@ -86,7 +98,9 @@ const Experience: React.FC = () => {
                         ))}
                     </tbody>
                 </TableContainer>
-            ) : <NoDataMessage>DB 데이터 없음</NoDataMessage>}
+            ): 
+            <div>No Data</div>
+            }
         </DiaryContainer>
     );
 };
@@ -237,13 +251,6 @@ const TableContainer = styled.table`
             display: none;
         }
     }
-`;
-
-const NoDataMessage = styled.div`
-    text-align: center;
-    margin-top: 1rem; // 16px
-    color: #666;
-    font-size: 1.25rem; // 20px
 `;
 
 export default Experience;
