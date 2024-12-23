@@ -8,18 +8,18 @@ interface ButtonContainerProps {
     onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void; // 매개변수를 받도록 수정
 }
 
-const ButtonContainer: React.FC<ButtonContainerProps> = ({ onSave, onCancel }) => {
+const Button: React.FC<ButtonContainerProps> = ({ onSave, onCancel }) => {
     return (
-        <Container>
+        <ButtonContainer>
             <button onClick={onSave}>저장하기</button>
             <button onClick={onCancel}>취소하기</button>
-        </Container>
+        </ButtonContainer>
     );
 };
 
-export default ButtonContainer;
+export default Button;
 
-const Container = styled.div`
+const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
 

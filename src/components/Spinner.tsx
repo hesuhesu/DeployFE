@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-const SpinnerWrapper = styled.div`
+const SpinnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,10 +24,10 @@ const SpinnerImage = styled.img`
 `;
 
 const Spinner = () => (
-  <SpinnerWrapper>
+  <SpinnerContainer>
     <div>데이터 로딩 중..</div>
     <SpinnerImage src="/spinning.gif" alt="Loading..." />
-  </SpinnerWrapper>
+  </SpinnerContainer>
 );
 
 export default Spinner;

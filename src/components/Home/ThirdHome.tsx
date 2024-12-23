@@ -1,13 +1,16 @@
 import React from 'react';
+import SideBar from './ThreeHome/SideBar.tsx';
+import ThirdHomeHeader from './ThreeHome/ThirdHomeHeader.tsx';
 import styled from 'styled-components';
 
 const ThirdHome: React.FC = () => {
-    return (
-        <ThirdHomeContainer>
-            <p>3 화면 입니다.</p>
-        </ThirdHomeContainer>
-    )
-}
+  return (
+    <ThirdHomeContainer>
+      <ThirdHomeHeader/>
+      <SideBar/>
+    </ThirdHomeContainer>
+  );
+};
 
 export default ThirdHome;
 
@@ -17,10 +20,7 @@ const ThirdHomeContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  p {
-    font-size: 30px;
-  }
+  border-radius: 5px;
 
   @media (max-width: 768px) {
     p {

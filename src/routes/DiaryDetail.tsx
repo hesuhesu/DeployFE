@@ -7,7 +7,7 @@ import { vibrate1, fadeIn } from '../components/Animation.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import Spinner from '../components/Spinner.tsx';
-import ScrollButtonContainer from '../components/DiaryDetail/ScrollButtonContainer.tsx';
+import ScrollButton from '../components/DiaryDetail/ScrollButton.tsx';
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
 import hljs from "highlight.js";
@@ -45,7 +45,7 @@ const DiaryDetail: React.FC = () => {
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
-        axios.get(`${HOST}:${PORT}/diary/read`, {
+        axios.get(`${HOST}:${PORT}/diary/read_detail`, {
             params: { _id: params }
         }).then((response) => {
             setData(response.data.list);
@@ -55,7 +55,6 @@ const DiaryDetail: React.FC = () => {
             setAdmin(1);
         }).catch((error) => { console.error(error); })
         .finally(() => {
-            // setTimeout(() => setIsLoading(false), 500);
             timeoutId = setTimeout(() => setIsLoading(false), 500);
           });
         return () => {
@@ -95,7 +94,7 @@ const DiaryDetail: React.FC = () => {
                 <HeaderOne>[{data.category}] {data.title}</HeaderOne>
                 <HeaderTwo>작성 일시 : {data.createdAt}</HeaderTwo>
                 <ButtonContainer>
-                    <button onClick={() => navigate("/diary")}>돌아가기</button>
+                    <button onClick={() => navigate(-1)}>돌아가기</button>
                     {admin === 1 && (
                     <>
                         <button onClick={() => navigate(`/quilleditor_update/${params}`, { state: data })}>수정하기</button>
@@ -111,7 +110,7 @@ const DiaryDetail: React.FC = () => {
                     modules={modules}
                     />
                 </QuillContainer>
-                <ScrollButtonContainer/>
+                <ScrollButton/>
             </DiaryDetailContainer>
       );
     };

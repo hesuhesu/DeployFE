@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons';
 
-const ScrollButtonContainer: React.FC = () => {
+const ScrollButton: React.FC = () => {
     
     const scrollToTop = () => {
         const scrollTarget = 0;
@@ -48,18 +48,20 @@ const ScrollButtonContainer: React.FC = () => {
     };
 
     return (
-        <Container>
+        <ScrollButtonContainer>
             <button onClick={scrollToTop}>
                 <FontAwesomeIcon icon={faArrowAltCircleUp} size="2x" />
             </button>
             <button onClick={scrollToBottom}>
                 <FontAwesomeIcon icon={faArrowAltCircleDown} size="2x" />
             </button>
-        </Container>
+        </ScrollButtonContainer>
     );
 };
 
-const Container = styled.div`
+export default ScrollButton;
+
+const ScrollButtonContainer = styled.div`
     position: fixed;
     bottom: 100px;
     right: 10px;
@@ -94,5 +96,3 @@ const Container = styled.div`
         }
     }
 `;
-
-export default ScrollButtonContainer;
