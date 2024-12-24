@@ -233,11 +233,14 @@ const CardImage = styled.img`
 `;
 
 const CardContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     h2 {
         font-size: 1.5rem;
         font-weight: bold;
         padding: 0.5rem;
-        text-align: center;
         margin-bottom: 10px;
     }
 
