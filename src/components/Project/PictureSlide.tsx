@@ -17,17 +17,19 @@ const PictureSlide: React.FC<PictureDivProps> = ({ pictures }) => {
     };
 
     return (
-        <SlideDiv>
+        <PictureSlideContainer>
             <img src={pictures[slideIndex]} alt={`Slide ${slideIndex}`} />
             {pictures.length > 1 && <>
                 <LeftButton onClick={handlePrev}>&lt;</LeftButton>
                 <RightButton onClick={handleNext}>&gt;</RightButton>
             </>}
-        </SlideDiv>
+        </PictureSlideContainer>
     );
 }
 
-const SlideDiv = styled.div`
+export default PictureSlide;
+
+const PictureSlideContainer = styled.div`
     position: relative;
     width:50%;
     height: 100%;
@@ -97,5 +99,3 @@ const RightButton = styled.button`
         font-size: 1.25rem; // 20px
     }
 `;
-
-export default PictureSlide;

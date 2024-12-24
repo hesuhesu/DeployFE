@@ -9,6 +9,7 @@ const Project: React.FC = () => {
   const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set());
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const refs = projectRefs.current; // refs 값을 로컬 변수로 복사
     const observer = new IntersectionObserver(
       (entries) => {
@@ -55,7 +56,7 @@ const Project: React.FC = () => {
         },
         {
           title: "완성도 높은 WYSIWYG Editor 구축",
-          description: "Javascript-Based 문서 편집 기능과 ThreeJS 를 활용한 GLTF Editor 를 결합한 졸업 과제 프로젝트입니다.",
+          description: "Javascript-Based 문서 편집 기능인 Quill Editor 와 ThreeJS 를 활용한 GLTF Editor 를 결합한 졸업 과제 프로젝트입니다.",
           link: "https://github.com/hesuhesu/SW_Project",
           picture: ["WYSIWYG_Editor.webp", "WYSIWYG_Editor2.webp"],
         },
@@ -66,8 +67,8 @@ const Project: React.FC = () => {
           picture: ["3D_Editor.webp", "3D_Editor2.webp"],
         },
         {
-          title: "나만의 블로그 만들기",
-          description: "포트폴리오 겸 직접 블로그를 제작하였습니다. 개발 했던 일기를 바탕으로 고민했던 부분들을 다시 볼 수 있습니다.",
+          title: "포트폴리오",
+          description: "포트폴리오 겸 개발 일기를 제작하였습니다. 개발 했던 일기를 바탕으로 고민했던 부분들을 다시 볼 수 있습니다.",
           link: "https://github.com/hesuhesu/ReactUITester",
           secondLink: "https://hesuhesu.o-r.kr",
           picture: ["MyBlog.webp", "MyBlog2.webp"],
@@ -81,13 +82,6 @@ const Project: React.FC = () => {
         >
           {index % 2 === 0 ? <>
             <PictureSlide pictures={project.picture}/>
-            {/*
-            <PictureDiv>
-              {project.picture.map((src, idx) => (
-                <img key={idx} src={src} alt="" />
-              ))}
-            </PictureDiv>
-            */}
             <ContentDiv>
               <h2>{project.title}</h2>
               <p>{project.description}</p>
@@ -194,14 +188,12 @@ const ProjectDiv = styled.div`
 
   &.fade-in {
     animation: ${glow} 4s infinite, ${fadeIn} 1s ease forwards;
-    opacity: 1;
     transform: translateY(0);
   }
 
   @media (max-width: 1200px) {
     flex-direction: column;  // 모바일에서는 세로로 정렬
   }
-
 `;
 
 const ContentDiv = styled.div`
@@ -255,25 +247,5 @@ const ButtonContainer = styled.div`
     }
   }
 `;
-
-/*
-const PictureDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  background-color: #282c34;
-  border-radius: 10px;
-
-  img {
-    border: 2px solid rgba(214, 230, 245, 0.925);
-    border-radius: 10px;
-    object-fit: scale-down;
-    height: 100%;
-    width: 100%;
-  }
-`;
-*/
 
 export default Project;

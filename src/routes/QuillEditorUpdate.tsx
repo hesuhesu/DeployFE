@@ -6,7 +6,7 @@ import EditorToolBar, { undoChange, redoChange, insertHeart } from '../component
 import axios from 'axios';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
-import ButtonContainer from '../components/QuillEditor/ButtonContainer.tsx';
+import Button from '../components/QuillEditor/Button.tsx';
 import 'katex/dist/katex.min.css'; // formular 활성화
 import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
 import '../scss/QuillEditor.scss';
@@ -198,7 +198,7 @@ const QuillEditorUpdate: React.FC = () => {
                 modules={modules}
                 style={{ height:'60vh'}}
             />
-            <ButtonContainer onSave={handleSubmit} onCancel={handleCancel} />
+            <Button onSave={handleSubmit} onCancel={handleCancel} />
         </FormContainer>
     )
 }
