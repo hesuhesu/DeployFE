@@ -43,7 +43,7 @@ const SideBar: React.FC = () => {
         {data.map((item, index) => (
             <DataItem key={index} onClick={() => navigate(`/diary_detail/${item._id}`)}>
               <DataImg src={`/${item.category.toLowerCase()}.svg`} alt={item.title} />
-              <h3>title : {item.title || `제목 ${index + 1}`}</h3>
+              <h3>{item.title || `제목 ${index + 1}`}</h3>
               <p>{item.content || `설명 ${index + 1}`}</p>
             </DataItem>
         ))}
@@ -86,7 +86,7 @@ const SideBarHeader = styled.div`
   }
 
   button {
-    background-color: #007bff;
+    background-color: #282c34;
     color: white;
     border: none;
     border-radius: 5px;
@@ -108,6 +108,25 @@ const DataList = styled.div`
   scroll-behavior: smooth;
   padding: 10px;
   will-change: transform; // GPU 가속
+
+  /* 스크롤 바 스타일 */
+  &::-webkit-scrollbar {
+    width: 8px; /* 스크롤 바의 너비 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(200, 200, 200, 0.3); /* 트랙의 배경색 */
+    border-radius: 10px; /* 트랙의 모서리 둥글게 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #282c34; /* 스크롤 바의 색상 */
+    border-radius: 10px; /* 스크롤 바의 모서리 둥글게 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #0056b3; /* 스크롤 바를 hover 했을 때의 색상 */
+  }
 `;
 
 const DataImg = styled.img`
@@ -139,6 +158,12 @@ const DataItem = styled.div`
     margin: 0;
     font-size: 14px;
     color: #555;
+
+    /* 글자 수 제한 */
+    white-space: nowrap;       /* 줄 바꿈 방지 */
+            overflow: hidden;          /* 넘치는 텍스트 숨기기 */
+            text-overflow: ellipsis;   /* '...'으로 표시 */
+            max-width: 150px;          /* 최대 너비 설정 */
   }
 
   &:hover {
