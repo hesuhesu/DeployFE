@@ -22,7 +22,7 @@ const ITEMS_PER_PAGE = 10;
 
 const Diary: React.FC = () => {
     const [api, setApi] = useState<ReviewItem[]>([]);
-    const CategoryList = useMemo(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo<string[]>(() => ['전체', 'React', 'Vue', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [status, setStatus] = useState<boolean>(false); // 관리자 인증
     const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
     const [isLoading, setIsLoading] = useState<Boolean>(true); // 로딩 상태 관리
@@ -31,7 +31,6 @@ const Diary: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        window.scrollTo(0, 0);
         let timeoutId: NodeJS.Timeout;
         setIsLoading(true);
         (async () => {

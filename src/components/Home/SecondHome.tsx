@@ -35,7 +35,7 @@ const H2Left = styled.h2`
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transform: translateX(-50px);
+  transform: translateX(-30px);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 
   &.fadeIn {
@@ -52,7 +52,7 @@ const H2Right = styled.h2`
   justify-content: center;
   align-items: center;
   opacity: 0;
-  transform: translateX(50px);
+  transform: translateX(30px);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 
   &.fadeIn {
