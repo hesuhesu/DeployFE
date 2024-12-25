@@ -9,7 +9,6 @@ const Project: React.FC = () => {
   const [visibleIndexes, setVisibleIndexes] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const refs = projectRefs.current; // refs 값을 로컬 변수로 복사
     const observer = new IntersectionObserver(
       (entries) => {

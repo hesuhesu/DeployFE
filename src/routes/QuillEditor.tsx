@@ -21,7 +21,7 @@ const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
 
 const QuillEditor: React.FC = () => {
-    const CategoryList = useMemo<string[]>(() => ['전체', 'React', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
+    const CategoryList = useMemo<string[]>(() => ['전체', 'React', 'Vue', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [editorHtml, setEditorHtml] = useState<string>('');
     const [title, setTitle] = useState<string>('');
     const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
