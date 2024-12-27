@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const Spinner = () => (
+  <SpinnerContainer>
+    <div>데이터 로딩 중..</div>
+    <SpinnerImage src={require('../assets/images/spinning.gif')} alt="Loading..." />
+  </SpinnerContainer>
+);
 
 const SpinnerContainer = styled.div`
   display: flex;
@@ -22,12 +28,5 @@ const SpinnerImage = styled.img`
   height: 200px;
   object-fit: cover; /* 불필요한 크기 조정을 방지 */
 `;
-
-const Spinner = () => (
-  <SpinnerContainer>
-    <div>데이터 로딩 중..</div>
-    <SpinnerImage src="/spinning.gif" alt="Loading..." />
-  </SpinnerContainer>
-);
 
 export default Spinner;

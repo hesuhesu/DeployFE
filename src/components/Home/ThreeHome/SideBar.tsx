@@ -42,7 +42,7 @@ const SideBar: React.FC = () => {
       <DataList>
         {data.map((item, index) => (
             <DataItem key={index} onClick={() => navigate(`/diary_detail/${item._id}`)}>
-              <DataImg src={`/${item.category.toLowerCase()}.svg`} alt={item.title} />
+              <DataImg src={require(`../../../assets/images/${item.category.toLowerCase()}.svg`)} alt={item.title} />
               <h3>{item.title || `제목 ${index + 1}`}</h3>
               <p>{item.content || `설명 ${index + 1}`}</p>
             </DataItem>
@@ -108,25 +108,6 @@ const DataList = styled.div`
   scroll-behavior: smooth;
   padding: 10px;
   will-change: transform; // GPU 가속
-
-  /* 스크롤 바 스타일 */
-  &::-webkit-scrollbar {
-    width: 8px; /* 스크롤 바의 너비 */
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(200, 200, 200, 0.3); /* 트랙의 배경색 */
-    border-radius: 10px; /* 트랙의 모서리 둥글게 */
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #282c34; /* 스크롤 바의 색상 */
-    border-radius: 10px; /* 스크롤 바의 모서리 둥글게 */
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #0056b3; /* 스크롤 바를 hover 했을 때의 색상 */
-  }
 `;
 
 const DataImg = styled.img`

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { textFlickerInGlow, fadeInUp, fadeIn } from './Animation.tsx';
@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     const location = useLocation();
 
     // 경로에 따라 h1 텍스트 설정
-    const pageTitle = (() => {
+    const pageTitle = useMemo(() => {
         switch (location.pathname) {
             case '/about':
                 return 'About';
@@ -18,12 +18,9 @@ const Header: React.FC = () => {
             case '/quilleditor':
                 return 'Quill Editor';
             default:
-                if (location.pathname.startsWith('/diary_detail')) {
-                    return 'Welcome to My Blog'; // diary_detail 경로일 때
-                }
-                return 'Portfolio';
+                return location.pathname.startsWith('/diary_detail') ? 'Welcome to My Blog' : 'Portfolio';
         }
-    })();
+    }, [location.pathname]);
 
     return (
         <HeaderContainer>

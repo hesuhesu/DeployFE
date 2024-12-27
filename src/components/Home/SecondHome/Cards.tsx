@@ -6,14 +6,14 @@ const Cards: React.FC = () => {
 
   const techStacks = [
     { name: 'SASS', logo: 'sass.svg' },
-    { name: 'JQuery', logo: 'jquery.svg'},
+    { name: 'JQuery', logo: 'jquery.svg' },
     { name: 'JavaScript', logo: 'javascript.svg' },
     { name: 'TypeScript', logo: 'typescript.svg' },
     { name: 'React', logo: 'react.svg' },
-    { name: 'Vue', logo: 'vue.svg'},
-    { name: 'Kotlin', logo: 'kotlin.svg'},
+    { name: 'Vue', logo: 'vue.svg' },
+    { name: 'Kotlin', logo: 'kotlin.svg' },
     { name: 'Three.js', logo: 'threejs.svg' },
-    { name: 'NodeJS', logo: 'nodejs.svg'},
+    { name: 'NodeJS', logo: 'nodejs.svg' },
     { name: 'MongoDB', logo: 'mongodb.svg' },
     { name: 'MySQL', logo: 'mysql.svg' },
     { name: 'AWS EC2', logo: 'aws.svg' },
@@ -22,18 +22,18 @@ const Cards: React.FC = () => {
   ];
 
   return (
-      <CardContainer style={{ width: buttonOn ? '36vw' : '10vw' }}>
-        {buttonOn ? (
-          techStacks.map((stack, index) => (
-            <Card key={index} style={{ animationDelay: `${0.5 + index * 0.1}s` }}>
-              <img src={stack.logo} alt={`${stack.name} logo`} />
-              <p>{stack.name}</p>
-            </Card>
-          ))
-        ) : (
-          <button onClick={() => setButtonOn(true)}>Click ME</button>
-        )}
-      </CardContainer>
+    <CardContainer style={{ width: buttonOn ? '36vw' : '10vw' }}>
+      {buttonOn ? (
+        techStacks.map((stack, index) => (
+          <Card key={index} style={{ animationDelay: `${0.5 + index * 0.1}s` }}>
+            <img src={require(`../../../assets/images/${stack.logo}`)} alt={`${stack.name} logo`} />
+            <p>{stack.name}</p>
+          </Card>
+        ))
+      ) : (
+        <button onClick={() => setButtonOn(true)}>Click ME</button>
+      )}
+    </CardContainer>
   );
 };
 

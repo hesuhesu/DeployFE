@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CanvasHome from '../components/Home/CanvasHome.tsx';
+import HomeHeader from '../components/Home/HomeHeader.tsx';
 import FirstHome from '../components/Home/FirstHome.tsx';
 import SecondHome from '../components/Home/SecondHome.tsx';
 import ThirdHome from '../components/Home/ThirdHome.tsx';
@@ -9,6 +10,7 @@ const Home: React.FC = () => {
   return (
     <HomeContainer>
       <CanvasHome/>
+      <HomeHeader/>
       <FirstHome/>
       <SecondHome/>
       <ThirdHome/>
@@ -25,7 +27,7 @@ const HomeContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   color: rgba(214, 230, 245, 0.925);
-  height: 400vh;
+  height: 430vh;
   background-color: #282c34;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.6),
     0 0 60px rgba(255, 255, 255, 0.45),
