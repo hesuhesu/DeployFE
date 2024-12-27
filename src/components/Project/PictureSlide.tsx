@@ -18,7 +18,7 @@ const PictureSlide: React.FC<PictureDivProps> = ({ pictures }) => {
 
     return (
         <PictureSlideContainer>
-            <img src={pictures[slideIndex]} alt={`Slide ${slideIndex}`} />
+            <img src={require(`../../assets/images/${pictures[slideIndex]}`)} alt={`Slide ${slideIndex}`} />
             {pictures.length > 1 && <>
                 <LeftButton onClick={handlePrev}>&lt;</LeftButton>
                 <RightButton onClick={handleNext}>&gt;</RightButton>

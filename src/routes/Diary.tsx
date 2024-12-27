@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -6,9 +6,12 @@ import { authCheck } from '../utils/authCheck.tsx';
 import { fadeIn, jelloHorizontal } from '../components/Animation.tsx';
 import Spinner from '../components/Spinner.tsx';
 import Pagination from '../components/Diary/Pagination.tsx';
+import { CategoryList } from '../utils/CategoryList.tsx';
+import SelectCategory from '../components/Diary/SelectCategory.tsx';
 
 const HOST = process.env.REACT_APP_HOST;
 const PORT = process.env.REACT_APP_PORT;
+const ITEMS_PER_PAGE = 10;
 
 interface ReviewItem {
     _id: string;
@@ -18,11 +21,8 @@ interface ReviewItem {
     createdAt: string;
 }
 
-const ITEMS_PER_PAGE = 10;
-
 const Diary: React.FC = () => {
     const [api, setApi] = useState<ReviewItem[]>([]);
-    const CategoryList = useMemo<string[]>(() => ['전체', 'React', 'Vue', 'NodeJS', 'Backend', 'Game', 'Etc'], []);
     const [status, setStatus] = useState<boolean>(false); // 관리자 인증
     const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
     const [isLoading, setIsLoading] = useState<Boolean>(true); // 로딩 상태 관리
@@ -49,8 +49,7 @@ const Diary: React.FC = () => {
             } 
         })();
         if (authCheck() === 0){ return; }
-        setStatus(prevStatus => !prevStatus);
-
+        setStatus(true);
         return () => {
             clearTimeout(timeoutId);
         };
@@ -74,21 +73,16 @@ const Diary: React.FC = () => {
             <ButtonContainer>
                 {status && <button onClick={() => navigate("/quilleditor")} aria-label="게시물 작성">게시물 작성하기</button>} 
             </ButtonContainer>
-            <SelectContainer>
-                <label htmlFor="category">카테고리 선택: </label>
-                <select id="category" value={selectedCategory} onChange={handleCategoryChange}>
-                    {CategoryList.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-            </SelectContainer>
+            <SelectCategory
+                selectedCategory={selectedCategory}
+                onCategoryChange={handleCategoryChange}
+                categories={CategoryList}
+            />
             <CardsContainer>
                 {api.length > 0 ? (
                     api.map((item) => (
                         <Card key={item._id} onClick={() => navigate(`/diary_detail/${item._id}`)}>
-                            <CardImage src={`/${item.category.toLowerCase()}.svg`} alt={item.title} />
+                            <CardImage src={require(`../assets/images/${item.category.toLowerCase()}.svg`)} alt={item.title} />
                             <CardContent>
                                 <h2>{item.title}</h2>
                                 <small>{item.createdAt}</small>
@@ -158,40 +152,6 @@ const ButtonContainer = styled.div`
         @media (max-width: 344px) {
             font-size: 0.625rem; // 10px 
             padding: 0.25rem 0.75rem; // 4px 12px
-        }
-    }
-`;
-
-const SelectContainer = styled.div`
-    margin: 1rem 0; // 16px 0
-    display: flex;
-    justify-content: right;
-    width: 100%;
-    animation: ${fadeIn} 1.5s ease forwards;
-
-    label {
-        font-size: 1.25rem; // 20px
-        margin-right: 0.625rem; // 10px
-        font-weight: bold;
-    }
-
-    select {
-        padding: 5px 10px;
-        margin-right: 10px;
-        font-size: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-
-    @media (max-width: 1200px) {
-        justify-content: center;
-
-        select {
-            padding: 5px 10px;
-            margin-right: 0;
-            font-size: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
         }
     }
 `;

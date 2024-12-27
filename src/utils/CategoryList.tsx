@@ -1,0 +1,1 @@
+export const CategoryList: string[] = ['전체', 'React', 'Vue', 'NodeJS', 'Backend', 'Game', 'Theory', 'Etc'];

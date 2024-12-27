@@ -311,6 +311,15 @@ export const textFlickerInGlow = keyframes`
     }
 `;
 
+// 깜빡 거리는 효과
+export const blink = keyframes`
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+`;
 
 // 진동 효과
 export const vibrate1 = keyframes`

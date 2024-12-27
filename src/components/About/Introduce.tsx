@@ -6,7 +6,7 @@ import Description from './Description.tsx';
 const Introduce: React.FC = () => {
     return (
         <IntroduceContainer>
-            <img src="profile.webp" alt="Description" />
+            <img src={require('../../assets/images/profile.webp')} alt="Description" />
             <h2>은희수</h2>
             <Description/>
         </IntroduceContainer>
