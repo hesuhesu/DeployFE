@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter, Outlet } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { GlobalStateProvider } from './utils/GlobalState.tsx';
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
 import Home from "./routes/Home.tsx";
@@ -35,22 +36,24 @@ const Layout: React.FC = () => {
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/project" element={<Project />} />
-            <Route path="/diary" element={<Diary />} />
-            <Route path="/diary_detail/:_id" element={<DiaryDetail />} />
-            <Route element={<PrivateRoute />}>
-              <Route path="/quilleditor" element={<QuillEditor />} />
-              <Route path="/quilleditor_update/:_id" element={<QuillEditorUpdate />} />
+      <GlobalStateProvider>
+        <QueryClientProvider client={queryClient}>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/project" element={<Project />} />
+              <Route path="/diary" element={<Diary />} />
+              <Route path="/diary_detail/:_id" element={<DiaryDetail />} />
+              <Route element={<PrivateRoute />}>
+                <Route path="/quilleditor" element={<QuillEditor />} />
+                <Route path="/quilleditor_update/:_id" element={<QuillEditorUpdate />} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="/authpage" element={<AuthPage />} />
-        </Routes>
-      </QueryClientProvider>
+            <Route path="/authpage" element={<AuthPage />} />
+          </Routes>
+        </QueryClientProvider>
+      </GlobalStateProvider>
     </BrowserRouter>
   );
 }

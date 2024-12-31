@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGlobalState } from '../utils/GlobalState.tsx';
 import axios from 'axios';
 import styled from 'styled-components';
 import { authCheck } from '../utils/authCheck.tsx';
@@ -24,10 +25,11 @@ interface ReviewItem {
 const Diary: React.FC = () => {
     const [api, setApi] = useState<ReviewItem[]>([]);
     const [status, setStatus] = useState<boolean>(false); // 관리자 인증
-    const [selectedCategory, setSelectedCategory] = useState<string>(CategoryList[0]);
-    const [isLoading, setIsLoading] = useState<Boolean>(true); // 로딩 상태 관리
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수
+    const { state, dispatch } = useGlobalState();
+    const { selectedCategory, currentPage } = state;
+    const [isLoading, setIsLoading] = useState<boolean>(true); // 로딩 상태 관리
+    const [totalPages, setTotalPages] = useState<number>(1); // 전체 페이지 수
+    const [totalItems, setTotalItems] = useState<number>(0);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,6 +43,7 @@ const Diary: React.FC = () => {
                 });
                 setApi(response.data.list);
                 setTotalPages(response.data.totalPages); // 전체 페이지 수 업데이트
+                setTotalItems(response.data.totalItems);
             } catch (error) {
                 console.error(error);
             }
@@ -56,12 +59,12 @@ const Diary: React.FC = () => {
     }, [currentPage, selectedCategory]);
 
     const handleCategoryChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCategory(event.target.value);
-        setCurrentPage(1);
+        dispatch({ type: 'SET_CATEGORY', payload: event.target.value });
+        dispatch({ type: 'SET_PAGE', payload: 1 });
     };
 
     const handlePageChange = (page: number) => {
-        setCurrentPage(page);
+        dispatch({ type: 'SET_PAGE', payload: page });
     };
 
     if (isLoading) {
@@ -78,6 +81,7 @@ const Diary: React.FC = () => {
                 onCategoryChange={handleCategoryChange}
                 categories={CategoryList}
             />
+            <h2>"{selectedCategory}({totalItems})"</h2>
             <CardsContainer>
                 {api.length > 0 ? (
                     api.map((item) => (
@@ -109,6 +113,10 @@ const DiaryContainer = styled.div`
     align-items: center; // 가로 중앙 정렬
     background-color: rgba(214, 230, 245, 0.925);
     color: #282c34;
+
+    h2 {
+        font-size: 40px;
+    }
 `;
 
 const ButtonContainer = styled.div`
