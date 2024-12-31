@@ -33,6 +33,7 @@ const QuillEditorUpdate: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        window.scrollTo(0,0);
         setTitle(location.state.title);
         setEditorHtml(location.state.realContent);
         setImgData(location.state.imgData);
@@ -132,8 +133,7 @@ const QuillEditorUpdate: React.FC = () => {
         imageDropAndPaste: { handler: imageDropHandler },
     }), [imageDropHandler]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         if (authCheck() === 0) {
             errorMessage("잘못된 접근!");
             return;
@@ -177,7 +177,7 @@ const QuillEditorUpdate: React.FC = () => {
     }
 
     return (
-        <FormContainer onSubmit={handleSubmit}>
+        <QuillEditorUpdateContainer>
             <CustomInput type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
             <SelectContainer>
                 <label htmlFor="category">카테고리 선택: </label>
@@ -199,11 +199,11 @@ const QuillEditorUpdate: React.FC = () => {
                 style={{ height:'60vh'}}
             />
             <Button onSave={handleSubmit} onCancel={handleCancel} />
-        </FormContainer>
+        </QuillEditorUpdateContainer>
     )
 }
 
-const FormContainer = styled.form`
+const QuillEditorUpdateContainer = styled.div`
     background-color:rgba(214, 230, 245, 0.925);
 `;
 

@@ -42,8 +42,9 @@ const DiaryDetail: React.FC = () => {
         createdAt: ''
     });
     const [isLoading, setIsLoading] = useState<Boolean>(true); // 로딩 상태 관리
-
+    
     useEffect(() => {
+        window.scrollTo(0,0);
         let timeoutId: NodeJS.Timeout;
         axios.get(`${HOST}:${PORT}/diary/read_detail`, {
             params: { _id: params }

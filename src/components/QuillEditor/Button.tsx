@@ -11,8 +11,8 @@ interface ButtonContainerProps {
 const Button: React.FC<ButtonContainerProps> = ({ onSave, onCancel }) => {
     return (
         <ButtonContainer>
-            <button onClick={onSave}>저장하기</button>
-            <button onClick={onCancel}>취소하기</button>
+            <button type="button" onClick={onSave}>저장하기</button>
+            <button type="button" onClick={onCancel}>취소하기</button>
         </ButtonContainer>
     );
 };
