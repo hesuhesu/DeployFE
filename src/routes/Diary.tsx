@@ -81,7 +81,7 @@ const Diary: React.FC = () => {
                 onCategoryChange={handleCategoryChange}
                 categories={CategoryList}
             />
-            <h2>"{selectedCategory}({totalItems})"</h2>
+            <h2>{selectedCategory}({totalItems})</h2>
             <CardsContainer>
                 {api.length > 0 ? (
                     api.map((item) => (
@@ -166,10 +166,10 @@ const ButtonContainer = styled.div`
 
 const CardsContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(50vw, 1fr)); /* 카드 크기 조정 */
+    grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr)); /* 카드 크기 조정 */
     gap: 2rem; /* 카드 간격 */
     width: 100%;
-    max-width: 1200px; /* 컨테이너 최대 너비 */
+    max-width: 50vw; /* 컨테이너 최대 너비 */
     margin: 0 auto; /* 가운데 정렬 */
     padding: 1rem;
 `;
