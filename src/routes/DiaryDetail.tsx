@@ -92,7 +92,10 @@ const DiaryDetail: React.FC = () => {
 
     return (
             <DiaryDetailContainer>
-                <HeaderOne>[{data.category}] {data.title}</HeaderOne>
+                <HeaderOne>
+                    <img src={require(`../assets/images/${data.category.toLowerCase()}.svg`)} alt=""/>
+                    <p>{data.title}</p>
+                </HeaderOne>
                 <HeaderTwo>작성 일시 : {data.createdAt}</HeaderTwo>
                 <ButtonContainer>
                     <button onClick={() => navigate(-1)}>돌아가기</button>
@@ -117,31 +120,38 @@ const DiaryDetail: React.FC = () => {
     };
 
 const DiaryDetailContainer = styled.div`
-    overflow: hidden; /* 스크롤바 숨기기 */
+    overflow: hidden;
     background-color: rgba(214, 230, 245, 0.925);
     animation: ${fadeIn} 0.5s ease-in-out;
 `;
 
 const HeaderOne = styled.h1`
+    height: 15vw;
     display: flex;
-    justify-content: center;
+    justify-content: center; 
     align-items: center;
+    position: relative;
     font-size: 1.5vw;
-    color: white;
-    background-color: #282c34;
-    padding: 20px 40px;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(214, 230, 245, 0.925); 
+    color: #282c34;
+    text-shadow: 
+        2px 2px 0 rgba(214, 230, 245, 0.925), // 오른쪽 아래
+        -2px -2px 0 rgba(214, 230, 245, 0.925), // 왼쪽 위
+        2px -2px 0 rgba(214, 230, 245, 0.925), // 오른쪽 위
+        -2px 2px 0 rgba(214, 230, 245, 0.925); // 왼쪽 아래
     
-    &:hover {
-        background-color: #3a3f47;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
-        transform: translateY(-2px); 
+    img {
+        position: absolute; /* 절대 위치 */
+        height: 70%;
+        opacity: 0.3;
+        left: 50%; /* 중앙 정렬 */
+        transform: translate(-50%); /* 중앙 정렬 보정 */
+    }
+
+    p {
+        position: relative; /* 상대 위치 */
+        margin: 0; /* 기본 마진 제거 */
     }
 `;
-
 const HeaderTwo = styled.h2`
     display:flex;
     justify-content: right;

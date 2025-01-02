@@ -66,7 +66,7 @@ const Project: React.FC = () => {
           picture: ["3D_Editor.webp", "3D_Editor2.webp"],
         },
         {
-          title: "포트폴리오",
+          title: "Portfolio",
           description: "포트폴리오 겸 개발 일기를 제작하였습니다. 개발 했던 일기를 바탕으로 고민했던 부분들을 다시 볼 수 있습니다.",
           link: "https://github.com/hesuhesu/ReactUITester",
           secondLink: "https://hesuhesu.o-r.kr",
