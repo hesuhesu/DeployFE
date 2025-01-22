@@ -4,7 +4,7 @@ import { errorMessage } from "./SweetAlertEvent.tsx";
 import { authCheck } from "./authCheck.tsx";
 
 const PrivateRoute : React.FC = () => {
-    if (authCheck() === 0){
+    if (authCheck() !== 1){
         errorMessage("잘못된 접근입니다..");
         return <Navigate to="/" />
     }

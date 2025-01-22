@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styled, { css } from 'styled-components';
 import { jelloVertical } from '../components/Animation.tsx';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import KakaoLogin from '../components/KakaoLogin.tsx';
+import { HOST, PORT } from '../utils/Variable.tsx';
 
-const HOST = process.env.REACT_APP_HOST;
-const PORT = process.env.REACT_APP_PORT;
-const AUTH: string = process.env.REACT_APP_AUTH as string;
-const USERNAME = process.env.REACT_APP_USER_NAME;
-const USERPASSWORD = process.env.REACT_APP_USER_PASSWORD;
+const AUTH: string = process.env.REACT_APP_ADMIN_AUTH as string;
+const NAME = process.env.REACT_APP_ADMIN_NAME;
+const PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
 
 interface LoginItem {
     username: string;
@@ -23,61 +23,87 @@ const AuthPage: React.FC = () => {
         username: '',
         password: '',
     });
+
     const navigate = useNavigate();
-    
+
     useEffect(() => {
-        if (authCheck() === 0){ return; }
+        if (authCheck() === 0) { return; }
         setStatus(!status);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // 폼 제출 기본 동작 방지
-        if (loginData.username === USERNAME && loginData.password === USERPASSWORD){
-            try {
-                await axios.post(`${HOST}:${PORT}/login`, loginData);  
-                successMessage("환영합니다 관리자님!");
-                localStorage.setItem("auth", AUTH);
-                navigate("/");
-            } catch (e) { errorMessage('에러'); }
+
+        if (loginData.username === NAME && loginData.password === PASSWORD) {
+            successMessage("환영합니다 관리자님!");
+            localStorage.setItem("auth", AUTH);
+            navigate(-1);
+            return;
         }
-        else {
-            errorMessage('유저가 아님!!');
+
+        try {
+            const response = await axios.post(`${HOST}:${PORT}/auth/login`, loginData);
+
+            // 토큰을 localStorage에 저장
+            localStorage.setItem('jwtToken', response.data.token);
+            successMessage("환영합니다 회원님!");
+            navigate(-1);
+            return;
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    errorMessage("Failed Login");
+                } else if (error.response.status === 500) {
+                    errorMessage("server Error");
+                }
+            } else {
+                errorMessage("ETC Error");
+            }
         }
     };
 
-    const handleLogout = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${HOST}:${PORT}/logout`);
-            successMessage("사용자 모드로 돌아갑니다");
-            localStorage.clear();
-            setStatus(prevStatus => !prevStatus);
-        } catch (e) { errorMessage('에러'); }
-    }
+            await axios.post(`${HOST}:${PORT}/auth/register`, loginData);
+            successMessage("회원 가입 완료!")
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 400) {
+                    errorMessage("이미 존재하는 유저입니다.");
+                } else if (error.response.status === 401) {
+                    errorMessage("공백이 있습니다.");
+                }
+            } else {
+                errorMessage("ETC Error");
+            }
+        }
+    };
 
     return (
         <AuthContainer>
-            {status ? <AdminBox>
-                <button onClick={handleLogout}>관리자 로그아웃</button>
-                <button onClick={() => navigate("/")}>HomePage</button>
-            </AdminBox> :  
-            <AuthBox onSubmit={handleLogin}>
-                <h2>Auth User</h2>
-                <input
-                    placeholder="username"
-                    onChange={(e) => setLoginData((prevState) => ({ ...prevState, username: e.target.value }))}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    onChange={(e) => setLoginData((prevState) => ({ ...prevState, password: e.target.value }))}
-                    required
-                />
-                <button type="submit">Auth In</button>
-                <button onClick={() => navigate("/")}>HomePage</button>
-            </AuthBox>}
+                <AuthBox onSubmit={handleLogin}>
+                    <h2>Auth</h2>
+                    <h3>
+                        댓글 작성을 위한 인증입니다. 어떠한 개인 정보도 취합하지 않습니다.
+                    </h3>
+                    <input
+                        placeholder="username"
+                        onChange={(e) => setLoginData((prevState) => ({ ...prevState, username: e.target.value }))}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        onChange={(e) => setLoginData((prevState) => ({ ...prevState, password: e.target.value }))}
+                        required
+                    />
+                    <button type="submit">Login</button>
+                    <button type="button" onClick={handleRegister}>Register</button>
+                    <button onClick={() => navigate("/")}>HomePage</button>
+                    {/* <KakaoLogin /> */}
+                </AuthBox>
         </AuthContainer>
     );
 }
@@ -97,7 +123,7 @@ const Structure = css`
 
     @media (max-width: 768px) {
         width: 20rem; // 320px
-        padding: 2rem,; // 32px
+        padding: 2rem; // 32px
     }
 
     @media (max-width: 480px) {
@@ -162,10 +188,9 @@ const AuthContainer = styled.div`
 
 const AuthBox = styled.form`
     ${Structure}
-`;
-
-const AdminBox = styled.div`
-    ${Structure}
+    h3 {
+        font-size:0.8rem;
+    }
 `;
 
 export default AuthPage;

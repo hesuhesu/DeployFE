@@ -6,7 +6,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 
 const EMAIL = process.env.REACT_APP_EMAIL; // .env 로 본인 이메일 설정
 
-const Footer: React.FC = () => {
+const Footer= React.memo(() => {
     return (
         <FooterContainer>
             <a href="https://github.com/hesuhesu" target="_blank" rel="noopener noreferrer" aria-label="github">
@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
             <Copyright>© 2024. hesuhesu. All rights reserved</Copyright>
         </FooterContainer>
     );
-};
+});
 
 const FooterContainer = styled.footer`
     background-color: #282c34;

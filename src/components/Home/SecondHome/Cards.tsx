@@ -6,12 +6,10 @@ const Cards: React.FC = () => {
 
   const techStacks = [
     { name: 'SASS', logo: 'sass.svg' },
-    { name: 'JQuery', logo: 'jquery.svg' },
     { name: 'JavaScript', logo: 'javascript.svg' },
     { name: 'TypeScript', logo: 'typescript.svg' },
     { name: 'React', logo: 'react.svg' },
     { name: 'Vue', logo: 'vue.svg' },
-    { name: 'Kotlin', logo: 'kotlin.svg' },
     { name: 'Three.js', logo: 'threejs.svg' },
     { name: 'NodeJS', logo: 'nodejs.svg' },
     { name: 'MongoDB', logo: 'mongodb.svg' },

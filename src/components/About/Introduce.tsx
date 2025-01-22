@@ -31,19 +31,29 @@ const IntroduceContainer = styled.div`
     img {
         max-width: 100%;
         height: 30%;
-        border-radius: 0.625rem; // 10px
+        border-radius: 0.625rem;
     }
 
     h2 {
-        font-size: 3rem; // 48px
+        font-size: 3rem;
+    }
+
+    @media (max-width: 1680px) {
+
+        h2 {
+            font-size: 2.75rem;
+        }
+
+        img {
+            height: 27.5%;
+        }
     }
 
     @media (max-width: 1200px) {
         width: 70%;
-        height: 80%;
 
         h2 {
-            font-size: 2.75rem; // 44px
+            font-size: 2.5rem;
         }
 
         img {
@@ -54,28 +64,23 @@ const IntroduceContainer = styled.div`
     @media (max-width: 768px) {
         width: 90%;
         h2 {
-            font-size: 2.5rem; // 40px
+            font-size: 2rem;
         }
 
         img {
-            height: 25%;
+            height: 27.5%;
         }
     }
 
     @media (max-width: 480px) {
-
         h2 {
-            font-size: 2.25rem; // 36px
-        }
-
-        img {
-            height: 22.5%;
+            font-size: 1.8rem;
         }
     }
 
     @media (max-width: 344px) {
         h2 {
-            font-size: 2rem; // 32px
+            font-size: 1.5rem;
         }
     }
 `;

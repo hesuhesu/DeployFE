@@ -12,14 +12,14 @@ import DiaryDetail from './routes/DiaryDetail.tsx';
 import QuillEditor from "./routes/QuillEditor.tsx";
 import QuillEditorUpdate from "./routes/QuillEditorUpdate.tsx";
 import AuthPage from "./routes/AuthPage.tsx";
+import Admin from "./routes/Admin.tsx";
+import Callback from './routes/Callback.tsx';
 import PrivateRoute from './utils/PrivateRoute.tsx';
 
-// npm install axios sweetalert2 react-paginate react-router-dom
-// npm install katex quill-image-resize quill-image-drop-module quill-image-drop-and-paste --save
-// npm install styled-components three babel-plugin-styled-components
-// npm install highlight.js compression-webpack-plugin --save-dev
-// npm install --save-dev ts-jest @types/jest
-// npm install @tanstack/react-query
+import './scss/QuillEditor.scss';
+import 'katex/dist/katex.min.css'; // formular 활성화
+import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
+import "highlight.js/styles/github.css";
 
 const queryClient = new QueryClient();
 
@@ -43,14 +43,18 @@ const App: React.FC = () => {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/project" element={<Project />} />
-              <Route path="/diary" element={<Diary />} />
-              <Route path="/diary_detail/:_id" element={<DiaryDetail />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/quilleditor" element={<QuillEditor />} />
-                <Route path="/quilleditor_update/:_id" element={<QuillEditorUpdate />} />
+              <Route path="/diary" element={<Diary/>} />
+              <Route path="/diary_detail/:_id" element={<DiaryDetail/>} />
+              <Route element={<PrivateRoute/>}>
+                <Route path="/quill_editor" element={<QuillEditor/>} />
+                <Route path="/quill_editor_update/:_id" element={<QuillEditorUpdate/>} />
               </Route>
             </Route>
-            <Route path="/authpage" element={<AuthPage />} />
+            <Route element={<PrivateRoute/>}>
+              <Route path={`/${process.env.REACT_APP_ADMIN_PAGE}`} element={<Admin />} />
+            </Route>
+            <Route path="/authpage" element={<AuthPage/>} />
+            <Route path="/oauth" element={<Callback />} />
           </Routes>
         </QueryClientProvider>
       </GlobalStateProvider>

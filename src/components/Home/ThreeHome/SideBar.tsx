@@ -132,19 +132,13 @@ const DataItem = styled.div`
   h3 {
     margin: 0 0 10px;
     font-size: 18px;
-  }
 
-  p {
-    margin: 0;
-    font-size: 14px;
-    color: #555;
-
-    /* 글자 수 제한 */
     white-space: nowrap;       /* 줄 바꿈 방지 */
-            overflow: hidden;          /* 넘치는 텍스트 숨기기 */
-            text-overflow: ellipsis;   /* '...'으로 표시 */
-            max-width: 150px;          /* 최대 너비 설정 */
+    overflow: hidden;          /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis;   /* '...'으로 표시 */
+    max-width: 20vw;          /* 최대 너비 설정 */
   }
+
 
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

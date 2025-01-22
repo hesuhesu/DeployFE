@@ -23,20 +23,19 @@ const AboutContainer = styled.div`
     background-color: #282c34;
 
     @media (max-width: 1200px) {
-        padding: 0.875rem; // 14px
-        height: 90vh;
+        padding: 0.75rem; 
     }
 
     @media (max-width: 768px) {
-        padding: 0.625rem; // 10px
+        padding: 0.5rem;
         height: 85vh;
     }
 
     @media (max-width: 480px) {
-        padding: 0.375rem; // 6px
+        padding: 0.3rem;
     }
 
     @media (max-width: 344px) {
-        padding: 0.25rem; // 4px 
+        padding: 0.25rem;
     }
 `;

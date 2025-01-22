@@ -1,13 +1,21 @@
-import React, { useMemo } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useMemo, useState } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { textFlickerInGlow, fadeInUp, fadeIn } from './Animation.tsx';
+import { authCheck } from '../utils/authCheck.tsx';
+import { successMessage } from '../utils/SweetAlertEvent.tsx';
 
-const Header: React.FC = () => {
+const Header = React.memo(() => {
+    const [status, setStatus] = useState<boolean>(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     // 경로에 따라 h1 텍스트 설정
     const pageTitle = useMemo(() => {
+        if (authCheck() !== 0){
+            setStatus(true);
+        }
+
         switch (location.pathname) {
             case '/about':
                 return 'About';
@@ -18,9 +26,15 @@ const Header: React.FC = () => {
             case '/quilleditor':
                 return 'Quill Editor';
             default:
-                return location.pathname.startsWith('/diary_detail') ? 'Welcome to My Blog' : 'Portfolio';
+                return location.pathname.startsWith('/diary_detail') ? 'My Diary' : 'Portfolio';
         }
     }, [location.pathname]);
+
+    const handleLogout = () => {
+        successMessage("로그아웃!");
+        localStorage.clear(); 
+        setStatus(false);
+    }
 
     return (
         <HeaderContainer>
@@ -33,9 +47,13 @@ const Header: React.FC = () => {
                     <li><StyledLink to="/project">Project</StyledLink></li>
                     <li><StyledLink to="/diary">Diary</StyledLink></li>
                 </NavList>
+                {status ? 
+                <h2 onClick={handleLogout}>로그아웃</h2> 
+                : 
+                <h2 onClick={() => navigate('/authpage')}>로그인 / 회원가입</h2>}
         </HeaderContainer>
     );
-};
+});
 
 const HeaderContainer = styled.header`
     display: flex;
@@ -45,6 +63,7 @@ const HeaderContainer = styled.header`
     color: rgba(214, 230, 245, 0.925);
     padding: 0.625rem; // 10px
     text-align: center;
+    position: relative;
 
     @media (max-width: 1200px) {
         padding: 0.5625rem; /* 9px */
@@ -52,6 +71,24 @@ const HeaderContainer = styled.header`
 
     @media (max-width: 480px) {
         padding: 0.5rem; // 8px
+    }
+
+    h2 {
+        font-size: 1rem;
+        position: absolute;
+        transform: translateY(-10vh); /* 위로 이동 */
+        opacity: 0.5;
+        left: 90%;
+    }
+
+    h2:hover {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 0.8rem;
+        }
     }
 `;
 

@@ -7,19 +7,12 @@ import axios from 'axios';
 import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
 import { authCheck } from '../utils/authCheck.tsx';
 import Button from '../components/QuillEditor/Button.tsx';
-import 'katex/dist/katex.min.css'; // formular 활성화
-import 'react-quill/dist/quill.snow.css'; // Quill snow스타일 시트 불러오기
-import '../scss/QuillEditor.scss';
 import hljs from "highlight.js";
-import { CategoryList } from '../utils/CategoryList.tsx';
-import "highlight.js/styles/github.css";
+import { CategoryList, HOST, PORT } from '../utils/Variable.tsx';
 
 hljs.configure({
   languages: ["javascript", "python", "java", "cpp"],
 });
-
-const HOST = process.env.REACT_APP_HOST;
-const PORT = process.env.REACT_APP_PORT;
 
 const QuillEditor: React.FC = () => {
     const [editorHtml, setEditorHtml] = useState<string>('');
@@ -190,6 +183,10 @@ const QuillEditor: React.FC = () => {
 }
 
 const QuillEditorContainer = styled.div`
+display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
     background-color:rgba(214, 230, 245, 0.925);
 `;
 
@@ -198,7 +195,11 @@ const CustomInput = styled.input`
     border: none;
     padding: 12px 0 12px 5px;
     margin: 8px 0 8px 0;
-    width: 100%;
+    width: 60vw;
+
+    @media (max-width: 1200px) {
+        width: 100vw;
+    }
 `;
 
 const SelectContainer = styled.div`
