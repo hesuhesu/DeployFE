@@ -24,8 +24,8 @@ export default Description;
 
 const DescriptionContainer = styled.dl`
     dt {
-        margin-top: 1.25rem; // 20px
-        margin-bottom: 1.25rem; // 20px
+        margin-top: 1rem;
+        margin-bottom: 1rem;
         position: relative;
 
         &::after {
@@ -56,31 +56,31 @@ const DescriptionContainer = styled.dl`
 
     @media (max-width: 768px) {
         dt {
-            font-size: 0.875rem; // 14px
+            font-size: 0.75rem;
         }
 
         dd {
-            font-size: 0.875rem; // 14px
+            font-size: 0.75rem;
         }
     }
 
     @media (max-width: 480px) {
         dt {
-            font-size: 0.75rem; // 12px
+            font-size: 0.6rem;
         }
 
         dd {
-            font-size: 0.75rem; // 12px
+            font-size: 0.6rem; 
         }
     }
 
     @media (max-width: 344px) {
         dt {
-            font-size: 0.625rem; // 10px 
+            font-size: 0.5rem;
         }
 
         dd {
-            font-size: 0.625rem; // 10px 
+            font-size: 0.5rem;
         }
     }
 `;

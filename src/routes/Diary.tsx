@@ -7,14 +7,12 @@ import { authCheck } from '../utils/authCheck.tsx';
 import { fadeIn, jelloHorizontal } from '../components/Animation.tsx';
 import Spinner from '../components/Spinner.tsx';
 import Pagination from '../components/Diary/Pagination.tsx';
-import { CategoryList } from '../utils/CategoryList.tsx';
+import { CategoryList, HOST, PORT } from '../utils/Variable.tsx';
 import SelectCategory from '../components/Diary/SelectCategory.tsx';
 
-const HOST = process.env.REACT_APP_HOST;
-const PORT = process.env.REACT_APP_PORT;
 const ITEMS_PER_PAGE = 10;
 
-interface ReviewItem {
+interface API {
     _id: string;
     title: string;
     content: string;
@@ -23,7 +21,7 @@ interface ReviewItem {
 }
 
 const Diary: React.FC = () => {
-    const [api, setApi] = useState<ReviewItem[]>([]);
+    const [api, setApi] = useState<API[]>([]);
     const [status, setStatus] = useState<boolean>(false); // 관리자 인증
     const { state, dispatch } = useGlobalState();
     const { selectedCategory, currentPage } = state;
@@ -51,7 +49,7 @@ const Diary: React.FC = () => {
                 timeoutId = setTimeout(() => setIsLoading(false), 500);
             } 
         })();
-        if (authCheck() === 0){ return; }
+        if (authCheck() !== 1){ return; }
         setStatus(true);
         return () => {
             clearTimeout(timeoutId);
@@ -74,7 +72,7 @@ const Diary: React.FC = () => {
     return (
         <DiaryContainer>
             <ButtonContainer>
-                {status && <button onClick={() => navigate("/quilleditor")} aria-label="게시물 작성">게시물 작성하기</button>} 
+                {status && <button onClick={() => navigate("/quill_editor")} aria-label="게시물 작성">게시물 작성하기</button>} 
             </ButtonContainer>
             <SelectCategory
                 selectedCategory={selectedCategory}
@@ -128,50 +126,54 @@ const ButtonContainer = styled.div`
     button {
         margin-top: 1rem; 
         margin-bottom: 1rem; 
-        padding: 0.5rem 1rem; // 8px 16px
+        padding: 0.5rem 1rem;
         background-color: #282c34;
         border: none;
-        border-radius: 0.625rem; // 10px 
+        border-radius: 0.625rem;
         color: white;
         font-weight: bold;
         cursor: pointer;
-        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2); // 0 4px 8px
+        box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
 
         &:hover {
-            box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.25); // 0 6px 12px
+            box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.25);
             animation: ${jelloHorizontal} 1s ease forwards;
         }
 
         &:active {
-            box-shadow: 0 0.1875rem 0.375rem rgba(0, 0, 0, 0.2); // 0 3px 6px
+            box-shadow: 0 0.1875rem 0.375rem rgba(0, 0, 0, 0.2);
             transform: translateY(1px);
         }
 
         @media (max-width: 768px) {
-            font-size: 0.875rem; // 14px
-            padding: 0.5rem 1rem; // 8px 16px
+            font-size: 0.875rem; 
+            padding: 0.5rem 1rem;
         }
 
         @media (max-width: 480px) {
-            font-size: 0.75rem; // 12px
-            padding: 0.375rem 0.875rem; // 6px 14px
+            font-size: 0.75rem; 
+            padding: 0.375rem 0.875rem;
         }
 
         @media (max-width: 344px) {
-            font-size: 0.625rem; // 10px 
-            padding: 0.25rem 0.75rem; // 4px 12px
+            font-size: 0.625rem;
+            padding: 0.25rem 0.75rem;
         }
     }
 `;
 
 const CardsContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr)); /* 카드 크기 조정 */
+    grid-template-columns: 1fr 1fr;
     gap: 2rem; /* 카드 간격 */
     width: 100%;
-    max-width: 50vw; /* 컨테이너 최대 너비 */
+    max-width: 80vw; /* 컨테이너 최대 너비 */
     margin: 0 auto; /* 가운데 정렬 */
     padding: 1rem;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: 1fr
+    }
 `;
 
 const Card = styled.div`
@@ -193,8 +195,7 @@ const Card = styled.div`
 `;
 
 const CardImage = styled.img`
-    width: 300px; /* 이미지 크기 */
-    height: 300px; /* 이미지 크기 */
+    width: 15vw; /* 이미지 크기 */
     object-fit: cover;
     margin-bottom: 1rem;
 `;
@@ -205,14 +206,42 @@ const CardContent = styled.div`
     align-items: center;
     justify-content: center;
     h2 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: bold;
         padding: 0.5rem;
         margin-bottom: 10px;
+
+        /* 글자 수 제한 */
+        white-space: nowrap;       /* 줄 바꿈 방지 */
+        overflow: hidden;          /* 넘치는 텍스트 숨기기 */
+        text-overflow: ellipsis;   /* '...'으로 표시 */
+        max-width: 35vw;
+
+        @media (max-width: 1200px) {
+            max-width: 60vw;  
+        }
+
+        @media (max-width: 960px) {
+            font-size: 1.0rem;
+        }
+
+        @media (max-width: 780px) {
+            font-size: 0.9rem;
+            max-width: 70vw;
+        }
+
+        @media (max-width: 600px) {
+            font-size: 0.75rem; 
+            max-width: 75vw;
+        }
     }
 
     small {
         font-size: 0.875rem;
+
+        @media (max-width: 960px) {
+            font-size: 0.7rem;
+        }
     }
 `;
 

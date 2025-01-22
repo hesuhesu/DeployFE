@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-regular-svg-icons';
+import { faArrowAltCircleUp, faArrowAltCircleDown, faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 
-const ScrollButton: React.FC = () => {
-    
+interface Props {
+    navigate: (path: string) => void;
+}
+
+const ScrollButton: React.FC<Props> = ({ navigate }) => {
     const scrollToTop = () => {
         const scrollTarget = 0;
         const currentScroll = window.scrollY;
@@ -52,6 +55,9 @@ const ScrollButton: React.FC = () => {
             <button onClick={scrollToTop}>
                 <FontAwesomeIcon icon={faArrowAltCircleUp} size="2x" />
             </button>
+            <button onClick={() => navigate('/diary')}>
+                <FontAwesomeIcon icon={faCircleCheck} size="2x" />
+            </button>
             <button onClick={scrollToBottom}>
                 <FontAwesomeIcon icon={faArrowAltCircleDown} size="2x" />
             </button>
@@ -64,7 +70,7 @@ export default ScrollButton;
 const ScrollButtonContainer = styled.div`
     position: fixed;
     bottom: 100px;
-    right: 10px;
+    right: 1rem;
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -85,10 +91,6 @@ const ScrollButtonContainer = styled.div`
         align-items: center;
         width: 40px;  // 원 모양 버튼
         height: 40px; // 원 모양 버튼
-
-        &:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-        }
 
         &:active {
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);

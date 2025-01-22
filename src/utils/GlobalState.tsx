@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
 
-// 타입 정의
-interface State {
+interface CategoryState {
     selectedCategory: string;
     currentPage: number;
 }
@@ -11,13 +10,13 @@ interface Action {
     payload: any;
 }
 
-const initialState: State = {
+const initialState: CategoryState = {
     selectedCategory: '전체', // 기본 카테고리
     currentPage: 1, // 기본 페이지
 };
 
 // 리듀서 정의
-const reducer = (state: State, action: Action): State => {
+const reducer = (state: CategoryState, action: Action): CategoryState => {
     switch (action.type) {
         case 'SET_CATEGORY':
             return { ...state, selectedCategory: action.payload };
@@ -29,7 +28,7 @@ const reducer = (state: State, action: Action): State => {
 };
 
 // 컨텍스트 생성
-const GlobalStateContext = createContext<{ state: State; dispatch: React.Dispatch<Action> } | undefined>(undefined);
+const GlobalStateContext = createContext<{ state: CategoryState; dispatch: React.Dispatch<Action> } | undefined>(undefined);
 
 export const GlobalStateProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(reducer, initialState);

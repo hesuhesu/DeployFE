@@ -14,7 +14,12 @@
 }
 
 #toolbar {
+  width: 60vw;
   background-color: #c4c4c4;
+
+  @media (max-width: 1200px) {
+    width: 100vw;
+  }
 }
 
 @font-face { 
@@ -83,12 +88,16 @@
 
 /* 에디터 양식 */
 .ql-editor{ 
-  width: 100%; 
+  width: 60vw;
   min-height: 60vh;
   img {
     border-radius: 10px !important;
     border: 3px solid #282c34 !important;  
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7); 
+  }
+
+  @media (max-width: 1200px) {
+    width: 100vw;
   }
 }
 
@@ -97,12 +106,4 @@
   color: black !important;
   border-radius: 10px !important;
   border: 3px solid black !important;
-}
-
-.quill-title {
-  background-color: #c4c4c4;
-  border: none;
-  padding: 12px 0 12px 5px;
-  margin: 8px 0 8px 0;
-  width: 100%; /* 캔버스의 최대 너비를 100%로 설정 */
 }
