@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { flipInHorBottom } from '../Animation.tsx';
+import { flipInHorBottom } from '../../utils/Animation.tsx';
 import Description from './Description.tsx';
 
 const Introduce: React.FC = () => {
@@ -36,6 +36,14 @@ const IntroduceContainer = styled.div`
 
     h2 {
         font-size: 3rem;
+
+        @media (max-width: 480px) {
+            font-size: 1.8rem;
+        }
+
+        @media (max-width: 344px) {
+            font-size: 1.5rem;
+        }
     }
 
     @media (max-width: 1680px) {
@@ -69,18 +77,6 @@ const IntroduceContainer = styled.div`
 
         img {
             height: 27.5%;
-        }
-    }
-
-    @media (max-width: 480px) {
-        h2 {
-            font-size: 1.8rem;
-        }
-    }
-
-    @media (max-width: 344px) {
-        h2 {
-            font-size: 1.5rem;
         }
     }
 `;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { fadeIn } from '../../components/Animation.tsx';
+import { fadeIn } from '../../utils/Animation.tsx';
 
 interface SelectCategoryProps {
     selectedCategory: string;

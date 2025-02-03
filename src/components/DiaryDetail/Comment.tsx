@@ -3,6 +3,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { HOST, PORT } from '../../utils/Variable.tsx';
 import { errorMessage } from '../../utils/SweetAlertEvent.tsx';
+import LoadingOverlay from '../../utils/LoadingOverlay.tsx';
+import { refreshAccessToken } from '../../api/Comment.tsx';
 
 interface Props {
     params: string | undefined;
@@ -32,7 +34,7 @@ const Comment: React.FC<Props> = ({ params }) => {
 
     const handleAddComment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // 기본 동작 방지
-        const token = localStorage.getItem('jwtToken');
+        const token = localStorage.getItem('accessToken');
         if (!token) {
             errorMessage("로그인 해주세요");
             return;
@@ -61,18 +63,28 @@ const Comment: React.FC<Props> = ({ params }) => {
                 setLoadingMessage(false);
             }, 500);
         } catch (error) {
-            setLoadingMessage(false); // 에러 발생 시 메시지 숨기기
-            if (error.response.status === 401) {
-                errorMessage("토큰 만료! 재 로그인 필요합니다");
-                localStorage.clear();
-            } else {
-                errorMessage("데이터 요청 실패..");
+            if (error.response.status === 403) {
+                // Access Token이 만료된 경우 Refresh Token으로 재발급
+                const refreshResult = await refreshAccessToken();
+                if (refreshResult) {
+                    return handleAddComment(e);
+                } else {
+                    localStorage.clear();
+                }
             }
+            const { message } = error.response.data;
+            setLoadingMessage(false); // 에러 발생 시 메시지 숨기기
+            errorMessage(message);
         }
     }
 
     const handleDeleteComment = async (index: number, username: string) => {
-        const token = localStorage.getItem('jwtToken');
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            errorMessage("로그인 해주세요");
+            return;
+        }
+
         try {
             await axios.delete(`${HOST}:${PORT}/diary/delete_comment`, {
                 data: { // data 속성 사용
@@ -90,29 +102,26 @@ const Comment: React.FC<Props> = ({ params }) => {
                 setComments((prevComments) => prevComments.filter((_, i) => i !== index)); // 인덱스를 사용하여 필터링
                 setDeletedIndices((prev) => prev.filter((i) => i !== index)); // 삭제된 인덱스 제거
             }, 300); // 애니메이션 시간과 일치시킴
-
         } catch (error) {
-            if (error.response.status === 401) {
-                errorMessage("토큰 만료! 재 로그인 필요합니다");
-                localStorage.clear();
+            if (error.response.status === 403) {
+                // Access Token이 만료된 경우 Refresh Token으로 재발급
+                const refreshResult = await refreshAccessToken();
+                if (refreshResult) {
+                    return handleDeleteComment(index, username);
+                } else {
+                    localStorage.clear();
+                }
             }
-            else if (error.response.status === 403) {
-                errorMessage("권한이 없습니다..");
-            }
-            else {
-                errorMessage("데이터 요청 실패..");
-            }
+            const { message } = error.response.data;
+            errorMessage(message);
+            setLoadingMessage(false);
         }
     };
 
     return (
         <CommentContainer>
             <h2>Comment</h2>
-            {loadingMessage && (
-                <LoadingOverlay>
-                    <LoadingText>댓글 작성 중...</LoadingText>
-                </LoadingOverlay>
-            )}
+            {loadingMessage &&  <LoadingOverlay/>}
             <CommentList>
                 {comments.map((comment, index) => (
                     <CommentItem
@@ -126,8 +135,11 @@ const Comment: React.FC<Props> = ({ params }) => {
                     </CommentItem>
                 ))}
             </CommentList>
+            
             <form onSubmit={handleAddComment}>
+                <label htmlFor="content">내용 입력:</label>
                 <textarea
+                    id="content" // label과 연결
                     value={content}
                     onChange={(e) => setContent(e.target.value)} // textarea 내용 반영
                     required
@@ -183,25 +195,6 @@ const CommentContainer = styled.div`
             background-color: darkred;
         }
     }
-`;
-
-const LoadingOverlay = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; // 다른 요소보다 위에 표시
-`;
-
-const LoadingText = styled.div`
-    color: rgba(214, 230, 245, 0.925);
-    font-size: 1.5rem;
-    transition: opacity 0.25s ease, transform 0.25s ease;
 `;
 
 const CommentList = styled.div`

@@ -1,5 +1,12 @@
-export const HOST:string = process.env.REACT_APP_HOST as string;
-export const PORT:string = process.env.REACT_APP_PORT as string;
+export const EMAIL = process.env.REACT_APP_EMAIL;
+export const HOST = process.env.REACT_APP_HOST;
+export const PORT = process.env.REACT_APP_PORT;
+export const ADMIN_NAME = process.env.REACT_APP_ADMIN_NAME;
+export const ADMIN_PASSWORD = process.env.REACT_APP_ADMIN_PASSWORD;
+export const ADMIN_PAGE =  process.env.REACT_APP_ADMIN_PAGE; 
+export const ADMIN_AUTH:string = process.env.REACT_APP_ADMIN_AUTH as string;
+export const REST_API_KEY =  process.env.REACT_APP_REST_API_KEY; 
+export const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
 interface Project {
     title: string,

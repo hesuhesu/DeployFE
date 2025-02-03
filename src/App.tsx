@@ -15,6 +15,7 @@ import AuthPage from "./routes/AuthPage.tsx";
 import Admin from "./routes/Admin.tsx";
 import Callback from './routes/Callback.tsx';
 import PrivateRoute from './utils/PrivateRoute.tsx';
+import { ADMIN_PAGE } from './utils/Variable.tsx';
 
 import './scss/QuillEditor.scss';
 import 'katex/dist/katex.min.css'; // formular 활성화
@@ -51,7 +52,7 @@ const App: React.FC = () => {
               </Route>
             </Route>
             <Route element={<PrivateRoute/>}>
-              <Route path={`/${process.env.REACT_APP_ADMIN_PAGE}`} element={<Admin />} />
+              <Route path={`/${ADMIN_PAGE}`} element={<Admin />} />
             </Route>
             <Route path="/authpage" element={<AuthPage/>} />
             <Route path="/oauth" element={<Callback />} />
