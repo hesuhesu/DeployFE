@@ -28,7 +28,7 @@ const AboutContainer = styled.div`
 
     @media (max-width: 768px) {
         padding: 0.5rem;
-        height: 85vh;
+        height: 90vh;
     }
 
     @media (max-width: 480px) {

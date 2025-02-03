@@ -1,7 +1,7 @@
 // ButtonContainer.tsx
 import React from 'react';
 import styled from 'styled-components';
-import { jelloVertical } from '../Animation.tsx';
+import { jelloVertical } from '../../utils/Animation.tsx';
 
 interface ButtonContainerProps {
     onSave: (e: React.MouseEvent<HTMLButtonElement>) => void; // 매개변수를 받도록 수정

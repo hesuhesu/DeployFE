@@ -3,13 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
-import { vibrate1, fadeIn } from '../components/Animation.tsx';
-import { authCheck } from '../utils/authCheck.tsx';
-import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
-import Spinner from '../components/Spinner.tsx';
 import DiaryDetailHeader from '../components/DiaryDetail/DiaryDetailHeader.tsx';
 import ScrollButton from '../components/DiaryDetail/ScrollButton.tsx';
 import Comment from '../components/DiaryDetail/Comment.tsx';
+import { vibrate1, fadeIn } from '../utils/Animation.tsx';
+import { authCheck } from '../utils/authCheck.tsx';
+import { errorMessage, successMessage } from '../utils/SweetAlertEvent.tsx';
+import Spinner from '../utils/Spinner.tsx';
 import { HOST, PORT } from '../utils/Variable.tsx';
 import hljs from "highlight.js";
 

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { successMessage } from '../utils/SweetAlertEvent.tsx';
+import AdminDiary from '../components/Admin/AdminDiary.tsx';
+import AdminUser from '../components/Admin/AdminUser.tsx';
 
 const Admin: React.FC = () => {
+  const [user, setUser] = useState<boolean>(false);
+  const [diary, setDiary] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -18,15 +22,15 @@ const Admin: React.FC = () => {
       <Sidebar>
         <h2>메뉴</h2>
         <ul>
-          <li>게시물 영역</li>
-          <li>사용자 관리</li>
+          <li onClick={() => setDiary(!diary)}>Diary 관리</li>
+          <li onClick={() => setUser(!user)}>User 관리</li>
           <li onClick={() => navigate("/")}>홈으로</li>
           <li onClick={handleLogout}>로그아웃</li>
         </ul>
       </Sidebar>
       <MainContent>
-        <h2>관리자님 환영합니다!</h2>
-        <p>여기에 주요 내용을 추가하세요.</p>
+        {diary && <AdminDiary/>}
+        {user && <AdminUser/>}
       </MainContent>
     </AdminContainer>
   );
@@ -34,7 +38,7 @@ const Admin: React.FC = () => {
 
 const AdminContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr; // Sidebar + Main Content
+  grid-template-columns: 1fr 4fr; // Sidebar + Main Content
   grid-template-rows: auto 1fr; // Header + Content
   height: 100vh;
 `;
@@ -55,6 +59,10 @@ const Sidebar = styled.aside`
 
 const MainContent = styled.main`
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
 `;
 
 export default Admin;

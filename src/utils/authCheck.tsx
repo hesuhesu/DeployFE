@@ -8,11 +8,11 @@ export const authCheck = (): number => {
     }
 
     const admin:string = localStorage.getItem('auth') as string;
-    if (admin && admin === AUTH) {
+    if (admin && (admin === AUTH)) {
         return 1;
     }
 
-    const token:string = localStorage.getItem('jwtToken') as string;
+    const token:string = localStorage.getItem('accessToken') as string;
     if (token) {
         return 2;
     }

@@ -4,7 +4,7 @@ import CanvasHome from '../components/Home/CanvasHome.tsx';
 import HomeHeader from '../components/Home/HomeHeader.tsx';
 import FirstHome from '../components/Home/FirstHome.tsx';
 import SecondHome from '../components/Home/SecondHome.tsx';
-import ThirdHome from '../components/Home/ThirdHome.tsx';
+import ThirdHome from '../components/Home/ThirdHome.tsx'
 
 const Home: React.FC = () => {
   return (
@@ -13,6 +13,14 @@ const Home: React.FC = () => {
       <HomeHeader/>
       <FirstHome/>
       <SecondHome/>
+      <ChartContainer>
+        {/*
+        <CommitChart owner={'hesuhesu'} repo={'SW_Project'}/>
+        <CommitChart owner={'hesuhesu'} repo={'hesuhesu'}/>
+        <CommitChart owner={'hesuhesu'} repo={'DeployFE'}/>
+        <CommitChart owner={'hesuhesu'} repo={'DeployBE'}/>
+        */}
+      </ChartContainer>
       <ThirdHome/>
     </HomeContainer>
   );
@@ -34,4 +42,10 @@ const HomeContainer = styled.div`
     0 0 110px rgba(255, 255, 255, 0.25),
     0 0 100px rgba(255, 255, 255, 0.1);
   position: relative;
+`;
+
+const ChartContainer = styled.div`
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem; /* 카드 간격 */
 `;

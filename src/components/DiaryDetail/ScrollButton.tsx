@@ -52,13 +52,13 @@ const ScrollButton: React.FC<Props> = ({ navigate }) => {
 
     return (
         <ScrollButtonContainer>
-            <button onClick={scrollToTop}>
+            <button onClick={scrollToTop} aria-label="Scroll to Top">
                 <FontAwesomeIcon icon={faArrowAltCircleUp} size="2x" />
             </button>
-            <button onClick={() => navigate('/diary')}>
+            <button onClick={() => navigate('/diary')} aria-label="Go Diary">
                 <FontAwesomeIcon icon={faCircleCheck} size="2x" />
             </button>
-            <button onClick={scrollToBottom}>
+            <button onClick={scrollToBottom} aria-label="Scroll to Buttom">
                 <FontAwesomeIcon icon={faArrowAltCircleDown} size="2x" />
             </button>
         </ScrollButtonContainer>
